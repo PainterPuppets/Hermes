@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, IndexRoute } from 'react-router-dom'
+import { BrowserRouter, Route, IndexRoute, Switch } from 'react-router-dom';
+import HomePageContainer from './homepage/containers/HomePageContainer';
 
 
 export default () => {
   return (
     <BrowserRouter>
-      <div>hello world! 233</div>
+      <Switch>
+        <Route path="/" component={HomePageContainer} />
+      </Switch>
     </BrowserRouter>
   )
 }
