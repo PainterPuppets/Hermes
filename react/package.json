@@ -4,7 +4,7 @@
   "scripts": {
     "watch": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js -w",
     "dev": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js",
-    "production": "yarn clean && cross-env NODE_ENV=production webpack --config ./config/webpack.config.js",
+    "production": "yarn clean && cross-env NODE_ENV=production  GENERATE_SOURCEMAP=false webpack --progress --config ./config/webpack.config.js --hide-modules",
     "clean": "rimraf ../static/react",
     "lint": "eslint src --ext .ts",
     "fix": "eslint src --ext .ts --fix"

@@ -45,3 +45,4 @@ cj/tempgen/cli.py
 # Batchjudge extract problem
 batchjudge_extract/
 db.sqlite3
+db/db.sqlite3
