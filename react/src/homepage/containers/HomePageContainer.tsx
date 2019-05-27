@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 class HomePageContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props: any) {
+    super(props);
   }
 
   render() {
     return (
       <div>
-        <button class="btn btn-lg">hello world</button>
+        hello world
       </div>
     );
   }

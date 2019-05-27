@@ -1,0 +1,138 @@
+{
+  "name": "hermes",
+  "license": "ISC",
+  "scripts": {
+    "watch": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js -w",
+    "dev": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js",
+    "production": "yarn clean && cross-env NODE_ENV=production webpack --config ./config/webpack.config.js",
+    "clean": "rimraf ../static/react",
+    "lint": "eslint src --ext .ts",
+    "fix": "eslint src --ext .ts --fix"
+  },
+  "dependencies": {
+    "@types/qs": "^6.5.3",
+    "ansi-to-react": "^5.0.0",
+    "antd": "^3.15.1",
+    "axios": "^0.18.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
+    "babel-loader": "8.0.5",
+    "babel-plugin-import": "^1.11.0",
+    "babel-plugin-named-asset-import": "^0.3.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^7.0.1",
+    "bfj": "6.1.1",
+    "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "classnames": "^2.2.6",
+    "cross-env": "^5.2.0",
+    "css-loader": "1.0.0",
+    "dotenv": "6.0.0",
+    "dotenv-expand": "4.2.0",
+    "file-loader": "2.0.0",
+    "fork-ts-checker-webpack-plugin-alt": "0.4.14",
+    "fs-extra": "7.0.1",
+    "html-webpack-plugin": "4.0.0-alpha.2",
+    "identity-obj-proxy": "3.0.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "0.5.0",
+    "mobx": "^5.9.0",
+    "mobx-react": "^5.4.3",
+    "moment": "^2.24.0",
+    "optimize-css-assets-webpack-plugin": "5.0.1",
+    "pnp-webpack-plugin": "1.2.1",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-preset-env": "6.5.0",
+    "postcss-safe-parser": "4.0.1",
+    "qs": "^6.7.0",
+    "react": "^16.8.3",
+    "react-app-polyfill": "^0.2.1",
+    "react-container-query": "^0.11.0",
+    "react-css-modules": "^4.7.9",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dev-utils": "^7.0.3",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.8.3",
+    "react-highcharts": "^16.0.2",
+    "react-loadable": "^5.5.0",
+    "react-media": "^1.9.2",
+    "react-onclickoutside": "^6.8.0",
+    "react-router-dom": "^4.3.1",
+    "resolve": "1.10.0",
+    "rimraf": "^2.6.3",
+    "sass-loader": "7.1.0",
+    "shortid": "^2.2.14",
+    "style-loader": "0.23.1",
+    "terser-webpack-plugin": "1.2.2",
+    "typescript": "3.3.3333",
+    "url-loader": "1.1.2",
+    "webpack-bundle-analyzer": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@svgr/webpack": "4.1.0",
+    "@types/node": "11.10.4",
+    "@types/react": "16.8.6",
+    "@types/react-custom-scrollbars": "^4.0.5",
+    "@types/react-dom": "16.8.2",
+    "@types/react-loadable": "^5.5.0",
+    "@types/react-onclickoutside": "^6.7.2",
+    "@types/react-router": "^4.4.4",
+    "@types/react-router-dom": "^4.3.1",
+    "eslint": "5.12.0",
+    "eslint-config-react-app": "^3.0.7",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.12.4",
+    "progress-bar-webpack-plugin": "^1.12.1",
+    "react-hot-loader": "^4.7.2",
+    "webpack": "4.28.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "3.1.14",
+    "webpack-manifest-plugin": "2.0.4",
+    "workbox-webpack-plugin": "3.6.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/react",
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "lib",
+          "style": true
+        },
+        "ant"
+      ],
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
+    ]
+  }
+}

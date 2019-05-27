@@ -1,15 +1,13 @@
-FROM python:3
+FROM nikolaik/python-nodejs:python3.7-nodejs12
 
-ENV PYTHONUNBUFFERED 1
+COPY . /home/app
+WORKDIR /home/app
 
-RUN mkdir /code
-WORKDIR /code
+# build frontend
+RUN cd react && yarn && yarn production
 
-# fronend build
-# ADD package.json /code/
-# RUN yarn install
-# RUN yarn build
+RUN pip install -r requirements.txt
 
-ADD requirements.txt /code/
-RUN pip install --index https://pypi.mirrors.ustc.edu.cn/simple/ -r requirements.txt
-ADD . /code/
+EXPOSE 9000 9000
+
+CMD ["sh", "./entrypoint.sh"]
