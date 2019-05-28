@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './router';
+import 'normalize.css';
 
-ReactDOM.render((<Router />), document.getElementById('root'));
+import App from './components/App';
 
+ReactDOM.render(<App />, document.getElementById('root'));
