@@ -1,4 +1,5 @@
 static/react/*
+static/
 
 .git
 .DS_Store
