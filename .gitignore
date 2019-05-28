@@ -34,6 +34,8 @@ celerybeat-schedule.*
 /templates/react/react_myadmin.html
 dist
 /templates/react/index.html
+/templates/base.html
+templates/base.html
 static/i18n/*.json
 react/.cache-loader
 yarn-error.log
