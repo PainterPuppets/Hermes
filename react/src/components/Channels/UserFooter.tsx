@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Tooltip } from 'antd';
+import { observer } from 'mobx-react';
 
 import UserAvatar from '../UserAvatar';
+import AuthStore from 'store/AuthStore';
 import UnmuteIcon from '../../icons/Unmute';
 import HeadphonesIcon from '../../icons/Headphones';
 import GearIcon from '../../icons/Gear';
@@ -45,6 +47,7 @@ const StyledUserFooter = styled.div`
 
   .buttons {
     display: flex;
+    margin-left : auto;
     flex: 0 1 auto;
   }
 `;
@@ -81,16 +84,14 @@ const StyledIconButton = styled.button`
   }
 `;
 
-export default () => {
-  const user = data.users[data.userId];
-
+export default observer(() => {
   return (
     <StyledUserFooter>
-      <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar} fadeHover />
+      <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${AuthStore.user.username}.png`} fadeHover />
 
       <div className="content">
-        <div className="username">{user.username}teste</div>
-        <div className="tag">#{user.tag}</div>
+        <div className="username">{AuthStore.user.username}</div>
+        <div className="tag">#{AuthStore.user.id}</div>
       </div>
 
       <div className="buttons">
@@ -114,4 +115,4 @@ export default () => {
       </div>
     </StyledUserFooter>
   );
-};
+});

@@ -21,6 +21,7 @@ const StyledMemberCard = styled.div<{ isPlaying: boolean }>`
 
     .avatar-wrapper {
       cursor: pointer;
+      margin-right: 0px;
 
       .status {
         border-color: ${props =>
@@ -45,6 +46,7 @@ const StyledMemberCard = styled.div<{ isPlaying: boolean }>`
       justify-content: center;
       align-items: center;
 
+      text-align: center;
       text-transform: uppercase;
       font-size: 0.65em;
       font-weight: 900;
@@ -147,7 +149,7 @@ const MemberCard = ({ member, guildRolesList }: any) => (
   <StyledMemberCard isPlaying={!!member.activity}>
     <div className="header">
       <div className="user-data">
-        <UserAvatar className="avatar-wrapper" avatarUrl={member.avatar} isBig>
+        <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} isBig>
           <div className="view-profile">View Profile</div>
         </UserAvatar>
 

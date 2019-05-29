@@ -14,6 +14,7 @@ const StyledMember = styled.div`
 
   display: flex;
   align-items: center;
+  user-select: none;
 
   :hover {
     background: ${colors.memberHoverBg};
@@ -42,7 +43,7 @@ const StyledMember = styled.div`
 
 const MemberListItem = ({ member, color, onMemberClick }: any) => (
   <StyledMember color={color} onClick={e => onMemberClick(e, member)}>
-    <UserAvatar className="avatar-wrapper" avatarUrl={member.avatar} />
+    <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} />
 
     <div className="member-inner">
       <div className="username">{member.username}</div>

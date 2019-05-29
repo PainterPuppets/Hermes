@@ -13,6 +13,7 @@ const StyledChannel = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   display: flex;
   align-items: center;
+  user-select: none;
 
   :hover {
     background-color: ${props => (props.isSelected ? colors.channelSelected : colors.grayLight)};

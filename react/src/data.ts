@@ -3,7 +3,7 @@
  * and be stored in a decent state manager, like Redux or MobX
  */
 
-import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IDirectMessage, IUser } from './constants/Interface';
+import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IDirectMessage, IUser } from './constant/Interface';
 
 let nextMessageId = 900;
 const randomMessages = [
@@ -133,7 +133,7 @@ const data: {
       id: 1111,
       name: 'Reactiflux',
       initials: 'R',
-      icon: 'https://i.imgur.com/EOASYoR.png',
+      icon: 'https://api.adorable.io/avatars/285/Reactiflux.png',
       welcomeChannelId: 111124,
       categories: [
         {
@@ -246,10 +246,10 @@ const data: {
       id: 2222,
       name: 'MonoGame Discord',
       initials: 'MD',
-      icon: 'https://i.imgur.com/13MolaQ.png',
+      icon: 'https://api.adorable.io/avatars/285/MD.png',
       welcomeChannelId: 222224,
       categories: [
-        {
+        { 
           id: 22222,
           name: 'announcements',
           channels: [
@@ -344,7 +344,7 @@ const data: {
       id: 3333,
       name: 'Terraria',
       initials: 'T',
-      icon: 'https://i.imgur.com/w0qLXk7.png',
+      icon: 'https://api.adorable.io/avatars/285/T.png',
       welcomeChannelId: 333323,
       categories: [
         {
@@ -425,7 +425,7 @@ const data: {
       id: 4444,
       name: 'Rocket League',
       initials: 'RL',
-      icon: 'https://i.imgur.com/WiifV40.png',
+      icon: 'https://api.adorable.io/avatars/285/RL.png',
       welcomeChannelId: 444423,
       categories: [
         {
@@ -504,7 +504,7 @@ const data: {
       id: 5555,
       name: 'Apex Legends',
       initials: 'AL',
-      icon: 'https://i.imgur.com/X4ypv4K.png',
+      icon: 'https://api.adorable.io/avatars/285/AL.png',
       welcomeChannelId: 555523,
       categories: [
         {
@@ -585,7 +585,7 @@ const data: {
       id: 6666,
       name: 'Cats Nation',
       initials: 'CN',
-      icon: 'https://i.imgur.com/yuJR8BC.jpg',
+      icon: 'https://api.adorable.io/avatars/285/CN.png',
       welcomeChannelId: 666623,
       categories: [
         {
@@ -674,7 +674,7 @@ const data: {
       id: 1,
       username: 'rafaelalmeidatk',
       tag: 7126,
-      avatar: 'https://i.imgur.com/cnAtbiX.png',
+      avatar: 'https://api.adorable.io/avatars/285/rafaelalmeidatk.png',
       activity: {
         type: 'game',
         name: 'Apex Legends',

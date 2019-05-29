@@ -102,7 +102,7 @@ export const Message = ({ guild, member, time, children, isHeading, onMemberClic
           <div className="avatar-wrapper" onClick={e => onMemberClick(e, member)}>
             <div
               className="avatar"
-              style={{ backgroundImage: `url(${member.avatar || constants.defaultAvatar})` }}
+              style={{ backgroundImage: `url(${`https://api.adorable.io/avatars/285/${member.username}.png`})` }}
             />
           </div>
           <div className="data">

@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 
-from user.serializers import UserSerializer, GroupSerializer, LoginSerializer, UserSerializerForMe
+from user.serializers import UserSerializer, SignupSerializer, LoginSerializer, UserSerializerForMe
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,7 +27,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['POST'])
     def login(self, request):
         '''
-        handle user's login when POST to /api/accounts/login/
+        handle user's login when POST to /api/user/login/
         '''
         if request.user.is_authenticated:
             return Response(UserSerializerForMe(request.user).data, status=status.HTTP_200_OK)
@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
         username = serializer.validated_data['username']
         password = serializer.validated_data['password']
         if not User.objects.filter(username__iexact=username).exists():
-            return Response({u'detail': u'您输入的账号不存在，请重新输入', u'field': u'email'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({u'detail': u'您输入的账号不存在，请重新输入', u'field': u'username'}, status=status.HTTP_401_UNAUTHORIZED)
 
         user = authenticate(username=username, password=password)
         if user is None:
@@ -46,6 +46,31 @@ class UserViewSet(viewsets.ModelViewSet):
         request.session.set_expiry(60 * 60 * 24 * 60)
 
         return Response(UserSerializerForMe(request.user).data, status=status.HTTP_200_OK)
+    
+    @list_route(methods=['POST'])
+    def signup(self, request):
+        '''
+        handle user's login when POST to /api/user/signup/
+        '''
+        serializer = SignupSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data['email']
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        
+        if User.objects.filter(email__iexact=email).exists():
+            return Response({u'detail': u'该email已被注册，请重新输入', u'field': u'email'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if User.objects.filter(username__iexact=username).exists():
+            return Response({u'detail': u'该username已被注册，请重新输入', u'field': u'username'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        user = User.objects.create_user(
+            email=email,
+            username=username,
+            password=password,
+        )
+
+        return Response({u'detail': u'注册成功'}, status=status.HTTP_200_OK)
 
 
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated])
@@ -55,11 +80,3 @@ class UserViewSet(viewsets.ModelViewSet):
         '''
         django_logout(request)
         return Response(status=status.HTTP_200_OK)
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer

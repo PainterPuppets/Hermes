@@ -1,4 +1,4 @@
-export default {
+const color = {
   primary: '#7187d6',
   green: '#3bb483',
   homeIcon: '#fff',
@@ -47,3 +47,5 @@ export default {
   proptipLabel: '#43b581',
   proptipText: 'rgba(255, 255, 255, 0.5)'
 };
+
+export default color;

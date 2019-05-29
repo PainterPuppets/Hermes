@@ -22,6 +22,7 @@ const StyledGuildIcon = styled.a<{ selected: boolean, icon: string }>`
   transition: 0.3s ease;
   text-decoration: none;
   color: #fff;
+  user-select: none;
 
   &.add {
     background: transparent;

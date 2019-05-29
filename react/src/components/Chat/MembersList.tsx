@@ -7,7 +7,7 @@ import data from '../../data';
 import ScrollableArea from '../ScrollableArea';
 import MemberListItem from './MemberListItem';
 
-import { IMember, IRole } from '../../constants/Interface';
+import { IMember, IRole } from '../../constant/Interface';
 
 const StyledMemberList = styled.div`
   background: ${colors.grayNormal};
@@ -26,6 +26,7 @@ const StyledRoleName = styled.div`
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
+  user-select: none;
 `;
 
 const MembersList = ({ guildRolesList, members, onMemberClick }: { guildRolesList: IRole[], members: IMember[], onMemberClick: any }) => {

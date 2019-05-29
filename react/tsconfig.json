@@ -24,8 +24,8 @@
       "stylesheet/*": [
         "./src/asset/stylesheet/*"
       ],
-      "image/*": [
-        "./src/asset/image/*"
+      "icons/*": [
+        "./src/icons/*"
       ],
       "shared/*": [
         "./src/shared/*"

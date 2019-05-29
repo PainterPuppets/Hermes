@@ -131,7 +131,7 @@ const PrivateChannels = ({ selectedChannelId, onChannelClick }: any) => (
           onClick={() => onChannelClick(null, directMessage.id)}
           smallHeight
         >
-          <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar} />
+          <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${user.username}.png`} />
           <span className="username">{user.username}</span>
           <button className="close" />
         </StyledChannel>

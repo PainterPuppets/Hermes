@@ -24,6 +24,7 @@ const StyledCategoryHeading = styled.div<{ isCollapsed: boolean }>`
   font-size: 0.8em;
   font-weight: 700;
   color: ${colors.channelName};
+  user-select: none;
 
   > svg {
     color: ${colors.channelName};

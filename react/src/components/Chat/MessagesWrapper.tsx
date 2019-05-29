@@ -6,7 +6,7 @@ import WelcomeChannelMessage from './WelcomeChannelMessage';
 import ScrollableArea from '../ScrollableArea';
 import MemberCardPopup from '../MemberCardPopup';
 
-import { IMessage } from '../../constants/Interface';
+import { IMessage } from '../../constant/Interface';
 import data from '../../data';
 
 const StyledMessagesWrapper = styled.div`

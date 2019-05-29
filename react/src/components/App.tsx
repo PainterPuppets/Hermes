@@ -1,13 +1,17 @@
 import React from 'react';
-
+import { observer } from 'mobx-react';
 import styled from 'styled-components';
+
+import AuthStore from 'store/AuthStore';
 import ScrollbarStyles from './ScrollbarStyles';
 import GlobalStyle from './GlobalStyle';
 import Navbar from './Navbar';
 import Channels from './Channels';
 import Chat from './Chat';
 import MemberCardPopup from './MemberCardPopup';
-import { IChannel } from '../constants/Interface';
+import LoginModal from './Login';
+import Loading from './Loading';
+import { IChannel } from '../constant/Interface';
 
 import data from '../data';
 
@@ -30,6 +34,7 @@ const StyledApp = styled.div`
   }
 `;
 
+@observer
 class App extends React.Component<any, IState> {
   constructor(props: any) {
     super(props);
@@ -39,6 +44,10 @@ class App extends React.Component<any, IState> {
       selectedChannelsId: {},
       selectedPrivateChannelId: 333
     }
+  }
+
+  componentDidMount() {
+
   }
 
   getSelectedGuild = () => {
@@ -134,6 +143,7 @@ class App extends React.Component<any, IState> {
         <ScrollbarStyles />
 
         <Navbar
+          loading={true}
           onHomeClick={this.handleHomeClick}
           onGuildClick={this.handleGuildClick}
           selectedGuildId={selectedGuildId}
@@ -156,6 +166,10 @@ class App extends React.Component<any, IState> {
           ref={node => {
             MemberCardPopup.instance = MemberCardPopup.instance || node;
           }}
+        />
+        <LoginModal
+          visible={!AuthStore.isAuthenticated && !AuthStore.initialize}
+          onCancel={() => {}}
         />
       </StyledApp>
     );

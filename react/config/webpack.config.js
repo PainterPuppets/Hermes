@@ -23,6 +23,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+// import color from '../src/utils/colors'
+const colors = require('./colors');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
@@ -432,9 +434,19 @@ module.exports = function () {
                   },
                 },
                 {
-                  loader: require.resolve('less-loader'), 
-                  options: { 
-                    javascriptEnabled: true 
+                  loader: require.resolve('less-loader'),
+                  options: {
+                    modifyVars: {
+                      'primary-color': colors.primary,
+                      'link-color': colors.primary,
+                      'component-background': colors.grayDark,
+                      'text-color': colors.text,
+                      'heading-color': colors.headerText,
+                      'input-color': colors.darkText,
+                      'success-color': colors.primary,
+                      'error-color': colors.error,
+                    },
+                    javascriptEnabled: true
                   } // compiles Less to CSS
                 }
               ],
