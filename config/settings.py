@@ -25,6 +25,12 @@ SECRET_KEY = '2%ypz)3vp2c4ecfnt==izv3x7evcdk#xbu3)@65hzpt5=__dmr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# centrifugo
+CENTRIFUGE_ADDRESS = 'https://socket.jiuzhang.com'
+CENTRIFUGE_SECRET = 'c597cc75-0c39-49b9-84b9-dffb5ec54873'
+CENTRIFUGE_TIMEOUT = 5
+
+
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1'
@@ -44,6 +50,9 @@ INSTALLED_APPS = [
 
     'user',
     'message',
+    'guild',
+    'realtime',
+    'chat',
 ]
 
 MIDDLEWARE = [

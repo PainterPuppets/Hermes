@@ -21,8 +21,9 @@ IM web app using react and django
  - 修改个人信息 5.29
  - some个人设置 5.29
  
- - 发消息 5.30
- - 收消息 5.30
+ - 收发私聊消息 5.30
+ - 收发群聊消息 5.30
+
  - 查看历史记录 5.30
  - group等model的创建
 

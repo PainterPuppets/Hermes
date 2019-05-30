@@ -53,7 +53,9 @@ const Navbar = ({ onHomeClick, onGuildClick, selectedGuildId }: any) => (
         ))}
 
         <Tooltip title="Add a Server" placement="right">
-          <GuildIcon isAdd={true} />
+          <span>
+            <GuildIcon isAdd={true} />
+          </span>
         </Tooltip>
       </div>
     </ScrollableArea>

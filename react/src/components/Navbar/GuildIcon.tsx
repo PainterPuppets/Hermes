@@ -32,14 +32,19 @@ const StyledGuildIcon = styled.a<{ selected: boolean, icon: string }>`
     font-weight: 400;
     font-size: 2.1em;
 
-    :hover {
+    :hover,
+    :focus,
+    :active {
       border-color: hsla(0, 0%, 100%, 0.75);
       color: hsla(0, 0%, 100%, 0.75);
     }
   }
 
-  :hover:not(.add) {
+  :hover:not(.add),
+  :focus:not(.add),
+  :active:not(.add) {
     background-color: ${colors.primary};
+    color: hsla(0, 0%, 100%, 0.75);
     border-radius: 15px;
   }
 
