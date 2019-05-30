@@ -3,15 +3,16 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import AuthStore from 'store/AuthStore';
+import CommonStore from 'store/CommonStore';
+import colors from '../utils/colors';
 import ScrollbarStyles from './ScrollbarStyles';
 import GlobalStyle from './GlobalStyle';
 import Navbar from './Navbar';
 import Channels from './Channels';
 import Chat from './Chat';
 import MemberCardPopup from './MemberCardPopup';
-import LoginModal from './Login';
-import Loading from './Loading';
 import { IChannel } from '../constant/Interface';
+import Loading from './Loading';
 
 import data from '../data';
 
@@ -25,7 +26,10 @@ interface IState {
 }
 
 const StyledApp = styled.div`
+  background-color: ${colors.grayLight};
+  border-color: ${colors.grayLight};
   display: flex;
+  height: 100%;
   min-height: 100%;
   width: 100%;
 
@@ -47,7 +51,7 @@ class App extends React.Component<any, IState> {
   }
 
   componentDidMount() {
-
+    CommonStore.initApp();
   }
 
   getSelectedGuild = () => {
@@ -132,6 +136,12 @@ class App extends React.Component<any, IState> {
   };
 
   render() {
+    if (!CommonStore.initialized) {
+      return (
+        <StyledApp>
+          <Loading />
+        </StyledApp>)
+    }
     const { selectedGuildId } = this.state;
     const selectedGuild = this.getSelectedGuild();
     const showPrivateChannels = !selectedGuild;
@@ -166,10 +176,6 @@ class App extends React.Component<any, IState> {
           ref={node => {
             MemberCardPopup.instance = MemberCardPopup.instance || node;
           }}
-        />
-        <LoginModal
-          visible={!AuthStore.isAuthenticated && !AuthStore.initialize}
-          onCancel={() => {}}
         />
       </StyledApp>
     );

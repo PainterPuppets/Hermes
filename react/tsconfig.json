@@ -27,9 +27,6 @@
       "icons/*": [
         "./src/icons/*"
       ],
-      "shared/*": [
-        "./src/shared/*"
-      ],
       "layout/*": [
         "./src/layout/*"
       ],

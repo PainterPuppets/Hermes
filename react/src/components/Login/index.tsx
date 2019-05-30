@@ -1,68 +1,33 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Tabs, Modal } from 'antd';
-import DiscordIcon from '../../icons/Discord';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
+import styled from 'styled-components';
+import colors from '../../utils/colors';
+import LoginModal from './LoginModal';
 
 import './style.less';
 
-const TabPane = Tabs.TabPane;
+const StyledLogin = styled.div`
+  background-color: ${colors.scrollbarThumbBackground};
+  border-color: ${colors.grayLight};
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+`;
 
-interface Props {
-  visible: boolean,
-  onCancel: Function,
-}
-
-const initialState = {
-  autoLogin: true,
-  type: 'login',
-  username: '',
-  password: '',
-};
-type State = Readonly<typeof initialState>
 
 @observer
-class LoginModal extends Component<Props, {}> {
-  readonly state: State = initialState
-
-  onTabChange = (key: any) => {
-    this.setState({
-      type: key,
-    });
-  }
-
-  changeAutoLogin = (e: { target: { checked: any; }; }) => {
-    this.setState({
-      autoLogin: e.target.checked
-    });
-  };
+class LoginPage extends Component<any, {}> {
 
   render() {
 
     return (
-      <Modal
-        visible={this.props.visible}
-        title={null}
-        footer={null}
-        closable={false}
-        maskClosable={false}
-        onCancel={() => this.props.onCancel}
-      >
-        <div className="login-modal-header">
-          <DiscordIcon className="login-modal-logo"/>
-        </div>
-        <Tabs defaultActiveKey="login" activeKey={this.state.type} onChange={this.onTabChange}>
-          <TabPane tab="登录" key="login">
-            <LoginForm onRegistration={() => this.onTabChange("signup")} onSuccess={() => { }} />
-          </TabPane>
-          <TabPane tab="注册" key="signup">
-            <SignupForm onSuccess={() => this.onTabChange("login")} />
-          </TabPane>
-        </Tabs>
-      </Modal>
+      <StyledLogin>
+        <LoginModal visible={true} onCancel={() => {}}/>
+      </StyledLogin>
     );
   }
 }
 
-export default LoginModal;
+export default LoginPage;

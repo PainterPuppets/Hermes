@@ -265,7 +265,7 @@ module.exports = function () {
       alias: {
         stylesheet: path.resolve(paths.appSrc, 'asset/stylesheet'),
         image: path.resolve(paths.appSrc, 'asset/image'),
-        layout: path.resolve(paths.appSrc, 'layout'),
+        centrifuge: path.resolve(paths.appSrc, '../package/centrifuge'),
         component: path.resolve(paths.appSrc, 'component'),
         page: path.resolve(paths.appSrc, 'page'),
         utils: path.resolve(paths.appSrc, 'utils'),
