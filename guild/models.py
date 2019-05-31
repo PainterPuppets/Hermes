@@ -3,7 +3,7 @@ import json
 
 from django.db import models
 from django.contrib.auth.models import User
-from message.models import Message
+from message.models import Message, Channel
 
 class Guild(models.Model):
     name = models.TextField()
@@ -19,9 +19,9 @@ class Role(models.Model):
     color = models.TextField()
 
 
-class Channel(models.Model):
-    name = models.TextField()
-    messages = models.ManyToManyField(Message, blank=True)
+# class Channel(models.Model):
+#     name = models.TextField()
+#     messages = models.ManyToManyField(Message, blank=True)
 
     
 class Categorie(models.Model):

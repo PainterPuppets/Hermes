@@ -13,6 +13,8 @@ import Chat from './Chat';
 import MemberCardPopup from './MemberCardPopup';
 import { IChannel } from '../constant/Interface';
 import Loading from './Loading';
+import SearchModal from './SearchModal';
+import UserProfileModal from './UserProfileModal';
 
 import data from '../data';
 
@@ -177,6 +179,12 @@ class App extends React.Component<any, IState> {
             MemberCardPopup.instance = MemberCardPopup.instance || node;
           }}
         />
+        <SearchModal
+          onSelectUser={(user: any) => {
+            console.log(user)
+          }}
+        />
+        <UserProfileModal />
       </StyledApp>
     );
   }

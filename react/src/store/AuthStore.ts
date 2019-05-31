@@ -30,6 +30,7 @@ class AuthStore {
   @action getUser() {
     return BaseProvider.get('/api/user/').then((res) => {
       this.update(res.data);
+      BaseProvider.refreshCSRFToken();
     }).finally(() => {
       this.initialize = false;
     });
@@ -39,6 +40,7 @@ class AuthStore {
     return BaseProvider.post('/api/user/login/', {
       username, password, remember
     }).then((res) => {
+      BaseProvider.refreshCSRFToken();
       this.update(res.data);
       this.initialize = false;
     });
@@ -51,9 +53,7 @@ class AuthStore {
   }
 
   @action logout() {
-    return BaseProvider.get('/api/auth/logout/').then(() => {
-      this.reset();
-    });
+    return BaseProvider.post('/api/user/logout/');
   }
 
   @action signup(username: string, email: string, password: string) {
@@ -81,7 +81,7 @@ class AuthStore {
   }
 
   @action reset() {
-    this.initialize = true;
+    this.initialize = false;
     this.isAuthenticated = false;
     this.user = {
       id: 0,

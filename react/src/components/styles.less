@@ -1,0 +1,15 @@
+@import '~antd/lib/style/themes/default.less';
+
+.logout-btn {
+    background-color: @error-color;
+    border-color: @error-color;
+    user-select: none;
+    cursor: pointer;
+    &:hover,
+    &:focus,
+    &:active{
+        background-color: tint(@error-color, 20%);
+        border-color: tint(@error-color, 20%);
+    }
+    width: 100%;
+}

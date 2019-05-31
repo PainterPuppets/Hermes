@@ -20,7 +20,7 @@ class WebSocketStore {
       this.env = res.data.env;
       this._centrifuge = new Centrifuge({
         url: res.data.url,
-        user: res.data.user,
+        user: `hermes-${res.data.user}`,
         timestamp: res.data.timestamp,
         token: res.data.token,
         sockJS: SockJS
@@ -89,6 +89,17 @@ class WebSocketStore {
   @action disconnect = async () => {
     const client = await this.getWebsocketClient();
     client.disconnect();
+  }
+
+  
+  @action reset() {
+    this.disconnect().then(() => {
+      this.connected = false;
+      this.initial = false;
+      this.env = 'hermes-';
+      this._centrifuge = null;
+      this._subscriptions = {};
+    });
   }
 
 }

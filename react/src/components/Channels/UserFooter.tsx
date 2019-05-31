@@ -4,6 +4,7 @@ import { Tooltip } from 'antd';
 import { observer } from 'mobx-react';
 
 import UserAvatar from '../UserAvatar';
+import CommonStore from 'store/CommonStore';
 import AuthStore from 'store/AuthStore';
 import UnmuteIcon from '../../icons/Unmute';
 import HeadphonesIcon from '../../icons/Headphones';
@@ -87,7 +88,7 @@ const StyledIconButton = styled.button`
 export default observer(() => {
   return (
     <StyledUserFooter>
-      <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${AuthStore.user.username}.png`} fadeHover />
+      <UserAvatar onClick={CommonStore.openProfileModal} className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${AuthStore.user.username}.png`} fadeHover />
 
       <div className="content">
         <div className="username">{AuthStore.user.username}</div>
@@ -108,7 +109,7 @@ export default observer(() => {
         </Tooltip>
 
         <Tooltip title="User Settings" placement="top">
-          <StyledIconButton>
+          <StyledIconButton onClick={CommonStore.openProfileModal}>
             <GearIcon />
           </StyledIconButton>
         </Tooltip>

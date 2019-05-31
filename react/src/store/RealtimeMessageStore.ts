@@ -10,6 +10,10 @@ class RealtimeMessageStore {
     await WebSocketStore.subscribe(`message-recieve#${AuthStore.user.id}`, (data: any) => { console.log(data) });
     this.initialize = false
   }
+  
+  @action reset() {
+    this.initialize = true;
+  }
 }
 
 const store = new RealtimeMessageStore();

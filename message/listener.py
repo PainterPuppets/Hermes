@@ -23,3 +23,21 @@ def push_signal(sender, instance, created, **kwargs):
     }
 
     WebSocketService.push_message(channel_name, message)
+
+
+def fanout_message(sender, instance, created, **kwargs):
+    from message.models import Signal
+    if not created:
+        return
+    
+    channel = sender.channel
+    signals = []
+    for user in channel.members:
+        signals.append(Signal(
+            receiver=user,
+            channel=channel,
+            is_recieved=(user != sender.user),
+            message=sender
+        ))
+
+    Signal.objects.bulk_create(signals)

@@ -445,6 +445,9 @@ module.exports = function () {
                       'input-color': colors.darkText,
                       'success-color': colors.primary,
                       'error-color': colors.error,
+                      'btn-danger-color': colors.text,
+                      'btn-danger-bg': colors.error,
+                      'btn-danger-border': colors.error,
                     },
                     javascriptEnabled: true
                   } // compiles Less to CSS

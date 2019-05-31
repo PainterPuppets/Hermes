@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CommonStore from 'store/CommonStore'
 import colors from '../../utils/colors';
 
 import ScrollableArea from '../ScrollableArea';
@@ -80,7 +81,7 @@ const StyledContent = styled.div`
 const Channels = ({ showPrivateChannels, guild, selectedChannelId, onChannelClick }: any) => {
   const getHeaderContent = () => {
     if (showPrivateChannels) {
-      return <StyledSearchBar placeholder="Find or start a conversation" />;
+      return <StyledSearchBar placeholder="Find or start a conversation" onClick={CommonStore.openSearchModal}/>;
     }
 
     return (

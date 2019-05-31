@@ -23,6 +23,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(UserSerializerForMe(request.user).data, status=status.HTTP_200_OK)
 
+    @list_route(methods=['GET'], permission_classes=[IsAuthenticated])
+    def search(self, request):
+        username = request.query_params.get('username', '')
+        query = User.objects.filter(username__contains=username)
+
+        return Response(UserSerializer(query, many=True).data)
+
 
     @list_route(methods=['POST'])
     def login(self, request):
@@ -71,7 +78,6 @@ class UserViewSet(viewsets.ModelViewSet):
         )
 
         return Response({u'detail': u'注册成功'}, status=status.HTTP_200_OK)
-
 
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated])
     def logout(self, request):

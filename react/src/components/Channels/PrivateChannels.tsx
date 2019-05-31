@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { observer } from 'mobx-react';
+import ChatStore from 'store/ChatStore';
 import UserAvatar from '../../components/UserAvatar';
 import ActivityIcon from '../../icons/Activity';
 import LibraryIcon from '../../icons/Library';
@@ -100,7 +101,10 @@ const StyledChannel = styled.div<{ smallHeight?: boolean }>`
   }
 `;
 
-const PrivateChannels = ({ selectedChannelId, onChannelClick }: any) => (
+const PrivateChannels = observer(({ selectedChannelId, onChannelClick }: any) => {
+  console.log(ChatStore.directMessages)
+
+  return (
   <StyledPrivateChannels>
     <StyledChannel>
       <ActivityIcon />
@@ -121,8 +125,8 @@ const PrivateChannels = ({ selectedChannelId, onChannelClick }: any) => (
 
     <div className="header">Direct Messages</div>
 
-    {data.directMessages.map(directMessage => {
-      const user = data.users[directMessage.userId];
+    {ChatStore.directMessages.map(directMessage => {
+      const user = directMessage.target;
 
       return (
         <StyledChannel
@@ -138,6 +142,6 @@ const PrivateChannels = ({ selectedChannelId, onChannelClick }: any) => (
       );
     })}
   </StyledPrivateChannels>
-);
+)});
 
 export default PrivateChannels;

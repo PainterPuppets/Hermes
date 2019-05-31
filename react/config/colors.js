@@ -6,7 +6,7 @@ const color = {
     darkText: '#000',
     headerText: '#fff',
 
-    green: '#3bb483',
+    green: '#43b581',
     homeIcon: '#fff',
     addGuildBorder: '#535559',
   
