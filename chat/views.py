@@ -24,7 +24,7 @@ class ChatViewSet(ViewSet):
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated], url_path='message/(?P<channel_id>[^/.]+)')
     def message(self, request, channel_id=None):
         try:
-            ChannelService.get_channel_from_id(channel_id)
+            channel = ChannelService.get_channel_from_id(channel_id)
         except Channel.DoesNotExist:
             return Response({u'detail': u'channel不存在'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -33,6 +33,7 @@ class ChatViewSet(ViewSet):
         content = serializer.validated_data['content']
 
         channel.send_message(request.user, content)
+        return Response(status=status.HTTP_200_OK)
 
     
     @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='directs')

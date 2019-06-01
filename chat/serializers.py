@@ -24,7 +24,7 @@ class DirectSerializer(serializers.ModelSerializer):
         )
     
     def get_id(self, obj):
-        return ChannelService.get_channel_id(obj)
+        return ChannelService.get_channel_id(obj.channel)
 
     def get_target(self, obj):
         user = self.context['request'].user

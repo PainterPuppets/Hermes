@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Empty } from 'antd';
-
+import ChatStore from 'store/ChatStore';
+import UIStore from 'store/UIStore';
 import ContentHeader from '../ContentHeader';
 import HeaderActionBar from './HeaderActionBar';
 import ChannelName from '../ChannelName';
@@ -97,7 +98,11 @@ const Chat = ({ className, isPrivate, channelName, guild, messages }: any) => {
               channelName={channelName}
               isPrivate={isPrivate}
             />
-            <NewMessageWrapper channelName={channelName} isPrivate={isPrivate} />
+            <NewMessageWrapper
+              channelName={channelName}
+              isPrivate={isPrivate}
+              onSend={(value: string) => ChatStore.sendMessage(UIStore.currentChannelId, value)}
+            />
           </div>
 
           {!isPrivate && membersListVisible && (

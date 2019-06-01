@@ -53,8 +53,12 @@ class ChatStore {
     });
   }
 
-  @action sendMessage = (content: string, id: string) => {
-    return BaseProvider.post(`/api/chat/message/${id}/`, { content });
+  @action sendMessage = (id: string, content: string) => {
+    if (!id) {
+      return;
+    }
+  
+    return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { content });
   }
 
   @action getdirectChannels = () => {

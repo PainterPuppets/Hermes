@@ -9,6 +9,8 @@ class UIStore {
   @observable selectedGuildId: number | null = null;
   @observable selectedChannelsId: { [guildId: number]: number; } = {};
   @observable selectedPrivateChannelId: number | string | null = null;
+  @observable currentChannelId = '';
+
 
   @computed get isPrivate() {
     return !this.selectedGuildId;
@@ -18,6 +20,7 @@ class UIStore {
     this.currentArea = 'HOME';
     this.selectedGuildId = null;
     this.selectedPrivateChannelId = null;
+    this.currentChannelId = '';
   }
 
   @action onClickUser = (target: IUser) => {
@@ -25,6 +28,7 @@ class UIStore {
     this.currentArea = 'HOME';
     this.selectedGuildId = null;
     this.selectedPrivateChannelId = channel.id;
+    this.currentChannelId = channel.id;
   }
 
   @computed get selectedGuild() {
@@ -95,6 +99,7 @@ class UIStore {
     const { currentArea } = this;
     if (currentArea === 'HOME') {
       this.selectedPrivateChannelId = channelId
+      this.currentChannelId = channelId;
     }
     if (currentArea === 'CHAT') {
       this.selectedChannelsId = {
@@ -109,6 +114,7 @@ class UIStore {
     this.selectedGuildId = null;
     this.selectedChannelsId = {};
     this.selectedPrivateChannelId = null;
+    this.currentChannelId = '';
   }
 }
 

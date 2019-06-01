@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import styled from 'styled-components';
+import { Input } from 'antd';
 
 import AttachButton from './AttachButton';
 import NewMessageButtons from './NewMessageButtons';
+
+const { TextArea } = Input;
 
 const StyledNewMessageForm = styled.form`
   border-radius: 5px;
@@ -18,32 +22,98 @@ const StyledDivider = styled.div`
   background-color: hsla(0, 0%, 100%, 0.1);
 `;
 
-const StyledTextarea = styled.textarea`
-  margin: 2px 2px 2px 0;
-  background: 0;
-  border: 0;
-  outline: 0;
-  color: hsla(0, 0%, 100%, 0.7);
-  font-size: 0.9375rem;
-  letter-spacing: -0.025rem;
-  line-height: 1.25rem;
-  max-height: 144px;
-  min-height: 20px;
-  padding: 10px;
-  resize: none;
+const StyledTextarea = styled.div`
   width: 100%;
+  .ant-input {
+    margin: 2px 2px 2px 0;
+    background: 0;
+    border: 0;
+    outline: 0;
+    color: hsla(0, 0%, 100%, 0.7);
+    font-size: 0.9375rem;
+    letter-spacing: -0.025rem;
+    line-height: 1.25rem;
+    max-height: 144px;
+    min-height: 20px;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    &:focus {
+      box-shadow: none;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #949494;
+    }
+    &:-moz-placeholder {
+      color: #949494;
+    }
+    &:-ms-input-placeholder {
+      color: #949494;
+    }
+  }
 `;
 
-const NewMessageForm = ({ channelName, isPrivate }: any) => (
-  <StyledNewMessageForm>
-    <AttachButton />
+@observer
+class NewMessageForm extends Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      value: '',
+    }
+  }
 
-    <StyledDivider />
+  onPressEnter = (event: any) => {
+    event && event.preventDefault();
+    if (this.state.value === '') {
+      return;
+    }
+    this.props.onSend(this.state.value)
+    this.setState({
+      value: '',
+    })
+  } 
 
-    <StyledTextarea rows={1} placeholder={`Message ${(isPrivate ? '@' : '#') + channelName}`} />
+  render() {
+    return (
+    <StyledNewMessageForm>
+      <AttachButton />
 
-    <NewMessageButtons />
-  </StyledNewMessageForm>
-);
+      <StyledDivider />
+
+      <StyledTextarea>
+        <TextArea
+          value={this.state.value}
+          onChange={e => this.setState({ value: e.target.value })}
+          className="scrollbar-tiny"
+          placeholder={`Message ${(this.props.isPrivate ? '@' : '#') + this.props.channelName}`}
+          autosize={{ minRows: 1, maxRows: 6 }}
+          onPressEnter={this.onPressEnter}
+        />
+      </StyledTextarea>
+
+      <NewMessageButtons />
+    </StyledNewMessageForm>
+    )
+  }
+}
+// const NewMessageForm = ({ channelName, isPrivate }: any) => (
+//   <StyledNewMessageForm>
+//     <AttachButton />
+
+//     <StyledDivider />
+
+//     <StyledTextarea>
+//       <TextArea
+//         className="scrollbar-tiny"
+//         placeholder={`Message ${(isPrivate ? '@' : '#') + channelName}`}
+//         autosize={{ minRows: 1, maxRows: 6 }}
+//         onPressEnter={}
+//       />
+//     </StyledTextarea>
+
+//     <NewMessageButtons />
+//   </StyledNewMessageForm>
+// );
 
 export default NewMessageForm;

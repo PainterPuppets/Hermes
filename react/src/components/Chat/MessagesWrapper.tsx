@@ -52,18 +52,18 @@ const MessagesWrapper = ({ channelName, guild, messages }: any) => {
   let lastUserId = messages.length > 0 ? messages[0].userId : null;
   const groupsComponents: any[] = [];
   let messagesComponents: any[] = [];
-  let headingGroupMessage: { userId: React.Key; id: any; time: any; } | null = null;
+  let headingGroupMessage: IMessage | null = null;
 
   const closeMessageGroupAndClearMessages = () => {
     if (!headingGroupMessage) {
       return;
     }
 
-    const userId = headingGroupMessage.userId;
+    const userId = headingGroupMessage.user.id;
     const guildMembers = guild ? guild.members : [];
     const guildMember = guildMembers.find((m: { userId: any; }) => m.userId === userId);
     const member = {
-      ...data.users[headingGroupMessage.userId],
+      ...headingGroupMessage.user,
       roles: guildMember ? guildMember.roles : null
     };
 
@@ -82,9 +82,9 @@ const MessagesWrapper = ({ channelName, guild, messages }: any) => {
   };
 
   messages.forEach((message: IMessage, index: number) => {
-    const { userId } = message;
+    const { user } = message;
 
-    if (userId !== lastUserId && messagesComponents.length > 0) {
+    if (user.id !== lastUserId && messagesComponents.length > 0) {
       closeMessageGroupAndClearMessages();
     }
 
@@ -92,7 +92,7 @@ const MessagesWrapper = ({ channelName, guild, messages }: any) => {
       headingGroupMessage = message;
     }
     messagesComponents.push(<Message key={message.id}>{message.content}</Message>);
-    lastUserId = message.userId;
+    lastUserId = message.user.id;
 
     if (index + 1 === messages.length) {
       closeMessageGroupAndClearMessages();

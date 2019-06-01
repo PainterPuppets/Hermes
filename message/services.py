@@ -16,12 +16,9 @@ class ChannelService(object):
         if channel.exists():
             return channel.first(), False
 
-        channel = Channel.objects.create(
-            is_private=True,
-            members=[user1, user2]
-        )
+        channel = Channel.objects.create(is_private=True)
+        channel.members.add(user1, user2)
 
-        # channel.members.add(user1, user2)
         directs = []
         for user in [user1, user2]:
             directs.append(Direct(user=user, channel=channel))
@@ -57,13 +54,13 @@ class ChannelService(object):
 
     @classmethod
     def get_channel_from_id(cls, id):
-        pattern = re.compile(r'(\w*)#(\w*)')
+        pattern = re.compile(r'([\s\S]*)#([\s\S]*)')
         result = re.search(pattern,id)
         if result[1] == 'direct' :
-            pattern = re.compile(r'(\w*)-(\w*)')
+            pattern = re.compile(r'([\s\S]*)-([\s\S]*)')
             result = re.search(pattern, result[2])
             users = User.objects.filter(id__in=[result[1], result[2]])
-            channel = cls.get_or_create_private_channel(users[0], users[1])
+            channel, created = cls.get_or_create_private_channel(users[0], users[1])
             return channel
 
         if result[1] == 'channel' :
@@ -78,9 +75,9 @@ class ChannelService(object):
         prefix=''
         id=''
         if channel.is_private:
-            users = channel.members
+            users = channel.members.all()
             prefix = 'direct'
-            id = users[0].id + '-' + users[1].id
+            id = str(users[0].id) + '-' + str(users[1].id)
         else:
             prefix = 'channel'
             id = channel.id

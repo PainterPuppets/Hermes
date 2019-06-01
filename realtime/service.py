@@ -55,6 +55,7 @@ class WebSocketService(object):
         logger.info('push message to %s' % channel_name)
         channel_name = cls.get_channel_name(channel_name)
 
+        print('push message to ' + channel_name)
         try:
             cls.client.publish(channel_name, message)
         except Exception as e:

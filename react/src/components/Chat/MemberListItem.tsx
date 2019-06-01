@@ -43,7 +43,7 @@ const StyledMember = styled.div`
 
 const MemberListItem = ({ member, color, onMemberClick }: any) => (
   <StyledMember color={color} onClick={e => onMemberClick(e, member)}>
-    <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} />
+    <UserAvatar className="avatar-wrapper" avatarUrl={member.avatar_url} />
 
     <div className="member-inner">
       <div className="username">{member.username}</div>

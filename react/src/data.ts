@@ -6,6 +6,181 @@
 import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IUser } from './constant/Interface';
 
 let nextMessageId = 900;
+
+const users: { [key: string]: IUser; } = {
+  1: {
+    id: 1,
+    username: 'rafaelalmeidatk',
+    tag: 7126,
+    avatar_url: 'https://api.adorable.io/avatars/285/rafaelalmeidatk.png',
+    activity: {
+      type: 'game',
+      name: 'Apex Legends',
+      duration: 'for 2 hours'
+    }
+  },
+  2: {
+    id: 2,
+    username: 'dodge',
+    tag: 3948,
+    avatar_url: 'https://api.adorable.io/avatars/285/29b0eSO.png',
+    activity: {
+      type: 'game',
+      name: 'Overwatch',
+      duration: 'for 3 hours'
+    }
+  },
+  3: {
+    id: 3,
+    username: 'moustache',
+    tag: 5249,
+    avatar_url: 'https://api.adorable.io/avatars/285/rIarYNI.png',
+    activity: {
+      type: 'game',
+      name: 'Overwatch',
+      duration: 'for 3 hours'
+    }
+  },
+  4: {
+    id: 4,
+    username: 'dice',
+    tag: 2183,
+    avatar_url: 'https://api.adorable.io/avatars/285/nmnMYRm.png',
+    activity: {
+      type: 'game',
+      name: 'RuneScape',
+      duration: 'for 43 minutes'
+    }
+  },
+  5: {
+    id: 5,
+    username: 'blender',
+    tag: 8613,
+    avatar_url: 'https://api.adorable.io/avatars/285/a0Nh9zW.png',
+    activity: {
+      type: 'game',
+      name: 'MapleStory',
+      duration: 'for 5 hours'
+    }
+  },
+  6: {
+    id: 6,
+    username: 'freefall',
+    tag: 5485,
+    avatar_url: 'https://api.adorable.io/avatars/285/oUpVX6P.png',
+    activity: {
+      type: 'game',
+      name: 'Dota 2',
+      duration: 'for 17 minutes'
+    }
+  },
+  7: {
+    id: 7,
+    username: 'moist',
+    tag: 8007,
+    avatar_url: 'https://api.adorable.io/avatars/285/znHDeHS.png',
+    activity: {
+      type: 'game',
+      name: 'FINAL FANTASY XIV',
+      duration: 'for 6 hours'
+    }
+  },
+
+  8: {
+    id: 8,
+    username: 'lucy',
+    tag: 4521,
+    avatar_url: 'https://api.adorable.io/avatars/285/GB01AQ3.png',
+    activity: {
+      type: 'game',
+      name: 'League of Legends',
+      duration: 'for 49 minutes'
+    }
+  },
+  9: {
+    id: 9,
+    username: 'bind',
+    tag: 8745,
+    avatar_url: 'https://api.adorable.io/avatars/285/xLCqPHl.png',
+    activity: {
+      type: 'game',
+      name: 'Dead Cells',
+      duration: 'for 31 minutes'
+    }
+  },
+  10: {
+    id: 10,
+    username: 'ruth',
+    tag: 6547,
+    avatar_url: 'https://api.adorable.io/avatars/285/RBodTfR.png',
+    activity: {
+      type: 'game',
+      name: 'Fortnite',
+      duration: 'for 2 hours'
+    }
+  },
+  11: {
+    id: 11,
+    username: 'classic',
+    tag: 2147,
+    avatar_url: 'https://api.adorable.io/avatars/285/rEpierV.png'
+  },
+  12: {
+    id: 12,
+    username: 'nadir',
+    tag: 1427,
+    avatar_url: 'https://api.adorable.io/avatars/285/UUIfwTJ.png'
+  },
+  13: {
+    id: 13,
+    username: 'socks',
+    tag: 1235,
+    avatar_url: 'https://api.adorable.io/avatars/285/pSNBDMS.png'
+  },
+  14: {
+    id: 14,
+    username: 'wilson',
+    tag: 8524,
+    avatar_url: 'https://api.adorable.io/avatars/285/Eca88PY.png'
+  },
+  15: {
+    id: 15,
+    username: 'board',
+    tag: 7412,
+    avatar_url: 'https://api.adorable.io/avatars/285/JQQ8YAp.png'
+  },
+  16: {
+    id: 16,
+    username: 'jolt',
+    tag: 9635,
+    avatar_url: 'https://api.adorable.io/avatars/285/L4FgyKp.png'
+  },
+  17: {
+    id: 17,
+    username: 'quark',
+    tag: 8542,
+    avatar_url: 'https://api.adorable.io/avatars/285/qyu0m3J.png'
+  },
+  18: {
+    id: 18,
+    username: 'invent',
+    tag: 7856,
+    avatar_url: 'https://api.adorable.io/avatars/285/RXBqm4G.png'
+  },
+  19: {
+    id: 19,
+    username: 'fox',
+    tag: 7894,
+    avatar_url: 'https://api.adorable.io/avatars/285/DH3GF6U.png'
+  },
+  20: {
+    id: 20,
+    username: 'stylus',
+    tag: 6392,
+    avatar_url: 'https://api.adorable.io/avatars/285/TnLdsV4.png'
+  }
+}
+
 const randomMessages = [
   'Quisque eget sapien scelerisque, sagittis neque sed, rhoncus lacus.',
   'nam elementum',
@@ -43,29 +218,10 @@ const generateRandomMessagesFromRandomUsers = (numOfMessages: number) => {
     for (var j = 0; j < rows; j++) {
       messages.push({
         id: nextMessageId++,
-        userId,
+        user: users[userId],
         content: randomMessages[Math.floor(Math.random() * randomMessages.length)],
         time: 'Today at 5:17 PM'
-      });
-    }
-  }
-
-  return messages;
-};
-
-const generateRandomMessagesFromGivenUsers = (numOfMessages: number, users: any[] | number[]) => {
-  const messages = [];
-
-  for (var i = 0; i < numOfMessages; i++) {
-    const userId = users[Math.floor(Math.random() * users.length)];
-    const rows = 1 + Math.floor(Math.random() * 3);
-    for (var j = 0; j < rows; j++) {
-      messages.push({
-        id: nextMessageId++,
-        userId,
-        content: randomMessages[Math.floor(Math.random() * randomMessages.length)],
-        time: 'Today at 5:17 PM'
-      });
+      } as IMessage);
     }
   }
 
@@ -83,7 +239,7 @@ const data: {
       id: 1111,
       name: 'Reactiflux',
       initials: 'R',
-      icon: 'https://api.adorable.io/avatar_urls/285/Reactiflux.png',
+      icon: 'https://api.adorable.io/avatars/285/Reactiflux.png',
       welcomeChannelId: 111124,
       categories: [
         {
@@ -93,7 +249,7 @@ const data: {
             {
               id: 111123,
               name: 'welcome',
-              messages: [...generateRandomMessagesFromGivenUsers(3, [13])]
+              messages: [...generateRandomMessagesFromRandomUsers(13)]
             },
             {
               id: 111124,
@@ -196,7 +352,7 @@ const data: {
       id: 2222,
       name: 'MonoGame Discord',
       initials: 'MD',
-      icon: 'https://api.adorable.io/avatar_urls/285/MD.png',
+      icon: 'https://api.adorable.io/avatars/285/MD.png',
       welcomeChannelId: 222224,
       categories: [
         { 
@@ -206,7 +362,7 @@ const data: {
             {
               id: 222223,
               name: 'rules',
-              messages: [...generateRandomMessagesFromGivenUsers(5, [4])]
+              messages: [...generateRandomMessagesFromRandomUsers(4)]
             },
             {
               id: 222224,
@@ -294,7 +450,7 @@ const data: {
       id: 3333,
       name: 'Terraria',
       initials: 'T',
-      icon: 'https://api.adorable.io/avatar_urls/285/T.png',
+      icon: 'https://api.adorable.io/avatars/285/T.png',
       welcomeChannelId: 333323,
       categories: [
         {
@@ -304,7 +460,7 @@ const data: {
             {
               id: 333323,
               name: 'rules',
-              messages: [...generateRandomMessagesFromGivenUsers(5, [5])]
+              messages: [...generateRandomMessagesFromRandomUsers(5)]
             },
             {
               id: 333324,
@@ -375,7 +531,7 @@ const data: {
       id: 4444,
       name: 'Rocket League',
       initials: 'RL',
-      icon: 'https://api.adorable.io/avatar_urls/285/RL.png',
+      icon: 'https://api.adorable.io/avatars/285/RL.png',
       welcomeChannelId: 444423,
       categories: [
         {
@@ -385,7 +541,7 @@ const data: {
             {
               id: 444423,
               name: 'rules',
-              messages: [...generateRandomMessagesFromGivenUsers(5, [5])]
+              messages: [...generateRandomMessagesFromRandomUsers(5)]
             },
             {
               id: 444424,
@@ -454,7 +610,7 @@ const data: {
       id: 5555,
       name: 'Apex Legends',
       initials: 'AL',
-      icon: 'https://api.adorable.io/avatar_urls/285/AL.png',
+      icon: 'https://api.adorable.io/avatars/285/AL.png',
       welcomeChannelId: 555523,
       categories: [
         {
@@ -464,7 +620,7 @@ const data: {
             {
               id: 555523,
               name: 'rules',
-              messages: [...generateRandomMessagesFromGivenUsers(5, [7])]
+              messages: [...generateRandomMessagesFromRandomUsers(57)]
             },
             {
               id: 555524,
@@ -535,7 +691,7 @@ const data: {
       id: 6666,
       name: 'Cats Nation',
       initials: 'CN',
-      icon: 'https://api.adorable.io/avatar_urls/285/CN.png',
+      icon: 'https://api.adorable.io/avatars/285/CN.png',
       welcomeChannelId: 666623,
       categories: [
         {
@@ -545,7 +701,7 @@ const data: {
             {
               id: 666623,
               name: 'rules',
-              messages: [...generateRandomMessagesFromGivenUsers(5, [1])]
+              messages: [...generateRandomMessagesFromRandomUsers(51)]
             },
             {
               id: 666624,
@@ -619,179 +775,7 @@ const data: {
       ]
     }
   ],
-  users: {
-    1: {
-      id: 1,
-      username: 'rafaelalmeidatk',
-      tag: 7126,
-      avatar_url: 'https://api.adorable.io/avatar_urls/285/rafaelalmeidatk.png',
-      activity: {
-        type: 'game',
-        name: 'Apex Legends',
-        duration: 'for 2 hours'
-      }
-    },
-    2: {
-      id: 2,
-      username: 'dodge',
-      tag: 3948,
-      avatar_url: 'https://i.imgur.com/29b0eSO.jpg',
-      activity: {
-        type: 'game',
-        name: 'Overwatch',
-        duration: 'for 3 hours'
-      }
-    },
-    3: {
-      id: 3,
-      username: 'moustache',
-      tag: 5249,
-      avatar_url: 'https://i.imgur.com/rIarYNI.jpg',
-      activity: {
-        type: 'game',
-        name: 'Overwatch',
-        duration: 'for 3 hours'
-      }
-    },
-    4: {
-      id: 4,
-      username: 'dice',
-      tag: 2183,
-      avatar_url: 'https://i.imgur.com/nmnMYRm.jpg',
-      activity: {
-        type: 'game',
-        name: 'RuneScape',
-        duration: 'for 43 minutes'
-      }
-    },
-    5: {
-      id: 5,
-      username: 'blender',
-      tag: 8613,
-      avatar_url: 'https://i.imgur.com/a0Nh9zW.jpg',
-      activity: {
-        type: 'game',
-        name: 'MapleStory',
-        duration: 'for 5 hours'
-      }
-    },
-    6: {
-      id: 6,
-      username: 'freefall',
-      tag: 5485,
-      avatar_url: 'https://i.imgur.com/oUpVX6P.jpg',
-      activity: {
-        type: 'game',
-        name: 'Dota 2',
-        duration: 'for 17 minutes'
-      }
-    },
-    7: {
-      id: 7,
-      username: 'moist',
-      tag: 8007,
-      avatar_url: 'https://i.imgur.com/znHDeHS.jpg',
-      activity: {
-        type: 'game',
-        name: 'FINAL FANTASY XIV',
-        duration: 'for 6 hours'
-      }
-    },
-
-    8: {
-      id: 8,
-      username: 'lucy',
-      tag: 4521,
-      avatar_url: 'https://i.imgur.com/GB01AQ3.jpg',
-      activity: {
-        type: 'game',
-        name: 'League of Legends',
-        duration: 'for 49 minutes'
-      }
-    },
-    9: {
-      id: 9,
-      username: 'bind',
-      tag: 8745,
-      avatar_url: 'https://i.imgur.com/xLCqPHl.jpg',
-      activity: {
-        type: 'game',
-        name: 'Dead Cells',
-        duration: 'for 31 minutes'
-      }
-    },
-    10: {
-      id: 10,
-      username: 'ruth',
-      tag: 6547,
-      avatar_url: 'https://i.imgur.com/RBodTfR.jpg',
-      activity: {
-        type: 'game',
-        name: 'Fortnite',
-        duration: 'for 2 hours'
-      }
-    },
-    11: {
-      id: 11,
-      username: 'classic',
-      tag: 2147,
-      avatar_url: 'https://i.imgur.com/rEpierV.jpg'
-    },
-    12: {
-      id: 12,
-      username: 'nadir',
-      tag: 1427,
-      avatar_url: 'https://i.imgur.com/UUIfwTJ.jpg'
-    },
-    13: {
-      id: 13,
-      username: 'socks',
-      tag: 1235,
-      avatar_url: 'https://i.imgur.com/pSNBDMS.jpg'
-    },
-    14: {
-      id: 14,
-      username: 'wilson',
-      tag: 8524,
-      avatar_url: 'https://i.imgur.com/Eca88PY.jpg'
-    },
-    15: {
-      id: 15,
-      username: 'board',
-      tag: 7412,
-      avatar_url: 'https://i.imgur.com/JQQ8YAp.jpg'
-    },
-    16: {
-      id: 16,
-      username: 'jolt',
-      tag: 9635,
-      avatar_url: 'https://i.imgur.com/L4FgyKp.jpg'
-    },
-    17: {
-      id: 17,
-      username: 'quark',
-      tag: 8542,
-      avatar_url: 'https://i.imgur.com/qyu0m3J.jpg'
-    },
-    18: {
-      id: 18,
-      username: 'invent',
-      tag: 7856,
-      avatar_url: 'https://i.imgur.com/RXBqm4G.jpg'
-    },
-    19: {
-      id: 19,
-      username: 'fox',
-      tag: 7894,
-      avatar_url: 'https://i.imgur.com/DH3GF6U.png'
-    },
-    20: {
-      id: 20,
-      username: 'stylus',
-      tag: 6392,
-      avatar_url: 'https://i.imgur.com/TnLdsV4.jpg'
-    }
-  }
+  users,
 }
 
 export default data;

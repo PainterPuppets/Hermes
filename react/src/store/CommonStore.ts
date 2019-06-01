@@ -62,7 +62,6 @@ class CommonStore {
   }
   
   @action openProfileModal = () => {
-    console.log('openProfileModal')
     this.profileModalVisible = true;
   }
 

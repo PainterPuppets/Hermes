@@ -19,7 +19,7 @@ export interface IDirectChannel {
 
 export interface IMessage {
     id: number;
-    userId: any;
+    user: IUser;
     content: string;
     time: string;
 }

@@ -1,5 +1,5 @@
 import { action, observable } from "mobx";
-import { Centrifuge } from 'centrifuge-ts';
+import Centrifuge from 'centrifuge';
 import SockJS from 'sockjs-client';
 import BaseProvider from '../utils/BaseProvider';
 
@@ -8,19 +8,20 @@ class WebSocketStore {
   @observable initial = false;
   @observable env = 'hermes-';
 
-  @observable _centrifuge: any = null;
-  @observable _subscriptions: { [channelName: string]: any } = {};
+  @observable _centrifuge = null;
+  @observable _subscriptions = {};
 
   @action getWebsocketClient = () => {
     if (this._centrifuge !== null) {
       return this._centrifuge;
     }
 
-    return BaseProvider.get('/api/realtime/config/').then((res: { data: { env: string; url: any; user: { toString: () => void; }; timestamp: any; token: any; }; }) => {
+    return BaseProvider.get('/api/realtime/config/').then((res) => {
+      console.log(res)
       this.env = res.data.env;
       this._centrifuge = new Centrifuge({
         url: res.data.url,
-        user: `hermes-${res.data.user}`,
+        user: `${res.data.user}`,
         timestamp: res.data.timestamp,
         token: res.data.token,
         sockJS: SockJS
@@ -29,6 +30,7 @@ class WebSocketStore {
       this._centrifuge.on('connect', () => {
         this.connected = true;
         this.initial = true;
+        console.log('connected!')
       });
 
       this._centrifuge.on('disconnect', () => {
@@ -41,23 +43,25 @@ class WebSocketStore {
     });
   }
 
-  @action _getChannelName = (text: string) => {
+  @action _getChannelName = (text) => {
     return this.env + text;
   }
 
-  @action subscribe = async (channelName: string, callBack?: Function) => {
+  @action subscribe = async (channelName, callBack) => {
     const client = await this.getWebsocketClient();
     const internalChannelName = this._getChannelName(channelName);
     if (this._subscriptions[internalChannelName]) {
       return this._subscriptions[internalChannelName];
     }
     const subscription = await client.subscribe(internalChannelName, callBack);
+    console.log(this.env)
+    console.log('subscribe ' + internalChannelName + ' success')
     this._subscriptions[internalChannelName] = subscription;
 
     return subscription;
   }
 
-  @action unsubscribe = async (channelName: string) => {
+  @action unsubscribe = async (channelName) => {
     const internalChannelName = this._getChannelName(channelName);
     const subscription = this._subscriptions[internalChannelName];
     if (!subscription) return;
@@ -65,7 +69,7 @@ class WebSocketStore {
     delete this._subscriptions[internalChannelName];
   }
 
-  @action getSubscription = (channelName: string) => {
+  @action getSubscription = (channelName) => {
     const internalChannelName = this._getChannelName(channelName);
     const subscription = this._subscriptions[internalChannelName];
     if (!subscription) {

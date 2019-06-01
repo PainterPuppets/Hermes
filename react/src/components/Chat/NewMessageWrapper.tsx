@@ -12,10 +12,10 @@ const StyledContainer = styled.div`
   padding-top: 20px;
 `;
 
-const NewMessageWrapper = ({ channelName, isPrivate }: any) => (
+const NewMessageWrapper = ({ channelName, isPrivate, onSend }: any) => (
   <StyledNewMessageWrapper>
     <StyledContainer>
-      <NewMessageForm channelName={channelName} isPrivate={isPrivate} />
+      <NewMessageForm channelName={channelName} isPrivate={isPrivate} onSend={onSend}/>
     </StyledContainer>
   </StyledNewMessageWrapper>
 );

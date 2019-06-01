@@ -150,7 +150,7 @@ const MemberCard = ({ member, guildRolesList }: any) => (
   <StyledMemberCard isPlaying={!!member.activity}>
     <div className="header">
       <div className="user-data">
-        <UserAvatar className="avatar-wrapper" onClick={() => UIStore.onClickUser(member)} avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} isBig>
+        <UserAvatar className="avatar-wrapper" onClick={() => UIStore.onClickUser(member)} avatarUrl={member.avatar_url} isBig>
           <div className="view-profile">Message</div>
         </UserAvatar>
 

@@ -24,7 +24,7 @@ class Channel(models.Model):
         )
 
         if self.is_private:
-            for direct in self.direct_set:
+            for direct in self.direct_set.all():
                 direct.active()
 
         self.last_activity_at = timezone.now()
