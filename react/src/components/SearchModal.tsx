@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Modal, Input, Empty, Icon } from 'antd';
 import styled from 'styled-components';
-import CommonStore from 'store/CommonStore'
+import CommonStore from 'store/CommonStore';
+import UIStore from 'store/UIStore';
 
 import ScrollableArea from './ScrollableArea';
 import UserAvatar from '../components/UserAvatar';
@@ -82,7 +83,7 @@ class SearchModal extends Component<any, any> {
   }
 
   onSelectUser = (user: any) => {
-    this.props.onSelectUser(user);
+    UIStore.onClickUser(user);
     CommonStore.closeSearchModal();
   }
 
@@ -100,7 +101,7 @@ class SearchModal extends Component<any, any> {
           <Input
             value={this.state.value}
             onChange={this.onChange}
-            autoFocus={true}
+            autoFocus
             placeholder="Search User From Username"
           />
         </StyledInput>
@@ -118,7 +119,7 @@ class SearchModal extends Component<any, any> {
             <ScrollableArea>
               {CommonStore.searchValue.map((user: any) => (
                 <StyledUserItem key={user.id} onClick={() => this.onSelectUser(user)}>
-                  <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${user.username}.png`} />
+                  <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar_url} />
                   <span className="username">{user.username}</span>
                 </StyledUserItem>
               ))}

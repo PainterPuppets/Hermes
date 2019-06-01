@@ -3,7 +3,7 @@
  * and be stored in a decent state manager, like Redux or MobX
  */
 
-import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IDirectMessage, IUser } from './constant/Interface';
+import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IUser } from './constant/Interface';
 
 let nextMessageId = 900;
 const randomMessages = [
@@ -73,67 +73,17 @@ const generateRandomMessagesFromGivenUsers = (numOfMessages: number, users: any[
 };
 
 const data: {
-  userId: number,
   friendsOnlineCount: number,
-  directMessages: IDirectMessage[],
   guilds: IGuild[];
   users: { [key: string]: IUser; };
 } = {
-  userId: 1,
   friendsOnlineCount: 2,
-  directMessages: [
-    {
-      id: 333,
-      userId: 2,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 2])]
-    },
-    {
-      id: 334,
-      userId: 3,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 3])]
-    },
-    {
-      id: 335,
-      userId: 4,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 4])]
-    },
-    {
-      id: 336,
-      userId: 6,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 6])]
-    },
-    {
-      id: 337,
-      userId: 12,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 12])]
-    },
-    {
-      id: 338,
-      userId: 15,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 15])]
-    },
-    {
-      id: 339,
-      userId: 9,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 9])]
-    },
-    {
-      id: 340,
-      userId: 16,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 16])]
-    },
-    {
-      id: 341,
-      userId: 14,
-      messages: [...generateRandomMessagesFromGivenUsers(20, [1, 14])]
-    }
-  ],
   guilds: [
     {
       id: 1111,
       name: 'Reactiflux',
       initials: 'R',
-      icon: 'https://api.adorable.io/avatars/285/Reactiflux.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/Reactiflux.png',
       welcomeChannelId: 111124,
       categories: [
         {
@@ -246,7 +196,7 @@ const data: {
       id: 2222,
       name: 'MonoGame Discord',
       initials: 'MD',
-      icon: 'https://api.adorable.io/avatars/285/MD.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/MD.png',
       welcomeChannelId: 222224,
       categories: [
         { 
@@ -344,7 +294,7 @@ const data: {
       id: 3333,
       name: 'Terraria',
       initials: 'T',
-      icon: 'https://api.adorable.io/avatars/285/T.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/T.png',
       welcomeChannelId: 333323,
       categories: [
         {
@@ -425,7 +375,7 @@ const data: {
       id: 4444,
       name: 'Rocket League',
       initials: 'RL',
-      icon: 'https://api.adorable.io/avatars/285/RL.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/RL.png',
       welcomeChannelId: 444423,
       categories: [
         {
@@ -504,7 +454,7 @@ const data: {
       id: 5555,
       name: 'Apex Legends',
       initials: 'AL',
-      icon: 'https://api.adorable.io/avatars/285/AL.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/AL.png',
       welcomeChannelId: 555523,
       categories: [
         {
@@ -585,7 +535,7 @@ const data: {
       id: 6666,
       name: 'Cats Nation',
       initials: 'CN',
-      icon: 'https://api.adorable.io/avatars/285/CN.png',
+      icon: 'https://api.adorable.io/avatar_urls/285/CN.png',
       welcomeChannelId: 666623,
       categories: [
         {
@@ -674,7 +624,7 @@ const data: {
       id: 1,
       username: 'rafaelalmeidatk',
       tag: 7126,
-      avatar: 'https://api.adorable.io/avatars/285/rafaelalmeidatk.png',
+      avatar_url: 'https://api.adorable.io/avatar_urls/285/rafaelalmeidatk.png',
       activity: {
         type: 'game',
         name: 'Apex Legends',
@@ -685,7 +635,7 @@ const data: {
       id: 2,
       username: 'dodge',
       tag: 3948,
-      avatar: 'https://i.imgur.com/29b0eSO.jpg',
+      avatar_url: 'https://i.imgur.com/29b0eSO.jpg',
       activity: {
         type: 'game',
         name: 'Overwatch',
@@ -696,7 +646,7 @@ const data: {
       id: 3,
       username: 'moustache',
       tag: 5249,
-      avatar: 'https://i.imgur.com/rIarYNI.jpg',
+      avatar_url: 'https://i.imgur.com/rIarYNI.jpg',
       activity: {
         type: 'game',
         name: 'Overwatch',
@@ -707,7 +657,7 @@ const data: {
       id: 4,
       username: 'dice',
       tag: 2183,
-      avatar: 'https://i.imgur.com/nmnMYRm.jpg',
+      avatar_url: 'https://i.imgur.com/nmnMYRm.jpg',
       activity: {
         type: 'game',
         name: 'RuneScape',
@@ -718,7 +668,7 @@ const data: {
       id: 5,
       username: 'blender',
       tag: 8613,
-      avatar: 'https://i.imgur.com/a0Nh9zW.jpg',
+      avatar_url: 'https://i.imgur.com/a0Nh9zW.jpg',
       activity: {
         type: 'game',
         name: 'MapleStory',
@@ -729,7 +679,7 @@ const data: {
       id: 6,
       username: 'freefall',
       tag: 5485,
-      avatar: 'https://i.imgur.com/oUpVX6P.jpg',
+      avatar_url: 'https://i.imgur.com/oUpVX6P.jpg',
       activity: {
         type: 'game',
         name: 'Dota 2',
@@ -740,7 +690,7 @@ const data: {
       id: 7,
       username: 'moist',
       tag: 8007,
-      avatar: 'https://i.imgur.com/znHDeHS.jpg',
+      avatar_url: 'https://i.imgur.com/znHDeHS.jpg',
       activity: {
         type: 'game',
         name: 'FINAL FANTASY XIV',
@@ -752,7 +702,7 @@ const data: {
       id: 8,
       username: 'lucy',
       tag: 4521,
-      avatar: 'https://i.imgur.com/GB01AQ3.jpg',
+      avatar_url: 'https://i.imgur.com/GB01AQ3.jpg',
       activity: {
         type: 'game',
         name: 'League of Legends',
@@ -763,7 +713,7 @@ const data: {
       id: 9,
       username: 'bind',
       tag: 8745,
-      avatar: 'https://i.imgur.com/xLCqPHl.jpg',
+      avatar_url: 'https://i.imgur.com/xLCqPHl.jpg',
       activity: {
         type: 'game',
         name: 'Dead Cells',
@@ -774,7 +724,7 @@ const data: {
       id: 10,
       username: 'ruth',
       tag: 6547,
-      avatar: 'https://i.imgur.com/RBodTfR.jpg',
+      avatar_url: 'https://i.imgur.com/RBodTfR.jpg',
       activity: {
         type: 'game',
         name: 'Fortnite',
@@ -785,61 +735,61 @@ const data: {
       id: 11,
       username: 'classic',
       tag: 2147,
-      avatar: 'https://i.imgur.com/rEpierV.jpg'
+      avatar_url: 'https://i.imgur.com/rEpierV.jpg'
     },
     12: {
       id: 12,
       username: 'nadir',
       tag: 1427,
-      avatar: 'https://i.imgur.com/UUIfwTJ.jpg'
+      avatar_url: 'https://i.imgur.com/UUIfwTJ.jpg'
     },
     13: {
       id: 13,
       username: 'socks',
       tag: 1235,
-      avatar: 'https://i.imgur.com/pSNBDMS.jpg'
+      avatar_url: 'https://i.imgur.com/pSNBDMS.jpg'
     },
     14: {
       id: 14,
       username: 'wilson',
       tag: 8524,
-      avatar: 'https://i.imgur.com/Eca88PY.jpg'
+      avatar_url: 'https://i.imgur.com/Eca88PY.jpg'
     },
     15: {
       id: 15,
       username: 'board',
       tag: 7412,
-      avatar: 'https://i.imgur.com/JQQ8YAp.jpg'
+      avatar_url: 'https://i.imgur.com/JQQ8YAp.jpg'
     },
     16: {
       id: 16,
       username: 'jolt',
       tag: 9635,
-      avatar: 'https://i.imgur.com/L4FgyKp.jpg'
+      avatar_url: 'https://i.imgur.com/L4FgyKp.jpg'
     },
     17: {
       id: 17,
       username: 'quark',
       tag: 8542,
-      avatar: 'https://i.imgur.com/qyu0m3J.jpg'
+      avatar_url: 'https://i.imgur.com/qyu0m3J.jpg'
     },
     18: {
       id: 18,
       username: 'invent',
       tag: 7856,
-      avatar: 'https://i.imgur.com/RXBqm4G.jpg'
+      avatar_url: 'https://i.imgur.com/RXBqm4G.jpg'
     },
     19: {
       id: 19,
       username: 'fox',
       tag: 7894,
-      avatar: 'https://i.imgur.com/DH3GF6U.png'
+      avatar_url: 'https://i.imgur.com/DH3GF6U.png'
     },
     20: {
       id: 20,
       username: 'stylus',
       tag: 6392,
-      avatar: 'https://i.imgur.com/TnLdsV4.jpg'
+      avatar_url: 'https://i.imgur.com/TnLdsV4.jpg'
     }
   }
 }

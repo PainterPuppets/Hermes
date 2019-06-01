@@ -4,6 +4,7 @@ import RealtimeMessageStore from './RealtimeMessageStore';
 import ChatStore from './ChatStore';
 import WebSocketStore from './WebSocketStore';
 import AuthStore from './AuthStore';
+import UIStore from './UIStore';
 
 class CommonStore {
   @observable searchLoading = false;
@@ -30,6 +31,7 @@ class CommonStore {
     ChatStore.reset();
     RealtimeMessageStore.reset();
     WebSocketStore.reset();
+    UIStore.reset();
     this.reset();
   }
 
@@ -46,7 +48,6 @@ class CommonStore {
     this.searchLoading = true;
     return BaseProvider.get(`/api/user/search/?username=${username}`).then((res: any) => {
       this.searchValue = res.data;
-      console.log(res.data)
     }).finally(() => {
       this.searchLoading = false;
     });

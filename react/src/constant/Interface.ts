@@ -3,7 +3,7 @@ export interface IUser {
     id: number;
     username: string;
     tag: number;
-    avatar: string;
+    avatar_url: string;
     activity?: {
         type: string;
         name: string;
@@ -11,9 +11,9 @@ export interface IUser {
     };
 };
 
-export interface IDirectMessage {
-    id: number;
-    userId: number;
+export interface IDirectChannel {
+    id: string;
+    target: IUser;
     messages: IMessage[];
 }
 

@@ -108,7 +108,6 @@ const Channels = ({ showPrivateChannels, guild, selectedChannelId, onChannelClic
         <ScrollableArea forceVertical tinyStyle autoHide>
           {showPrivateChannels && (
             <PrivateChannels
-              selectedChannelId={selectedChannelId}
               onChannelClick={onChannelClick}
             />
           )}

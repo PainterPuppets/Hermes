@@ -21,10 +21,10 @@ class ChatViewSet(ViewSet):
     API endpoint that allows users to be viewed or edited.
     """
 
-    @list_route(methods=['POST'], permission_classes=[IsAuthenticated], url_path='message/(?P<channel_id>[0-9]+)')
+    @list_route(methods=['POST'], permission_classes=[IsAuthenticated], url_path='message/(?P<channel_id>[^/.]+)')
     def message(self, request, channel_id=None):
         try:
-            channel = Channel.objects.get(id=channel_id)
+            ChannelService.get_channel_from_id(channel_id)
         except Channel.DoesNotExist:
             return Response({u'detail': u'channel不存在'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -35,28 +35,18 @@ class ChatViewSet(ViewSet):
         channel.send_message(request.user, content)
 
     
-    @list_route(methods=['GET'], permission_classes=[IsAuthenticated])
+    @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='directs')
     def directs(self, request):
         directs = Direct.objects.filter(user=request.user, is_close=False)
         serializer = DirectSerializer(directs, context={'request': request}, many=True)
         return Response(serializer.data)
 
 
-    @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='direct/(?P<user_id>[0-9]+)')
-    def direct(self, request, user_id=None):
-        try:
-            target = User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return Response({u'detail': u'未找到对应的用户'}, status=status.HTTP_404_NOT_FOUND)
+    @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='direct/(?P<id>[^/.]+)')
+    def direct(self, request, id=None):
+        if not ChannelService.check_channel_exist(id):
+            return Response({u'detail': u'channel不存在'}, status=status.HTTP_404_NOT_FOUND)
 
-        user = request.user
-        channel = ChannelService.get_or_create_private_channel(user, target)
-        try:
-            direct = Direct.objects.get(user=user, channel=channel)
-            direct.is_close = False
-            direct.save()
-
-        except Direct.DoesNotExist:
-            direct = Direct.objects.create(user=user, channel=channel)
-
+        channel = ChannelService.get_channel_from_id(id)
+        direct = channel.direct_set.get(user=request.user)
         return Response(DirectSerializer(direct, context={'request': request}).data)

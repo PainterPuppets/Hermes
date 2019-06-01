@@ -23,6 +23,10 @@ class Channel(models.Model):
             channel=self,
         )
 
+        if self.is_private:
+            for direct in self.direct_set:
+                direct.active()
+
         self.last_activity_at = timezone.now()
         self.save()
 
@@ -45,6 +49,13 @@ class Direct(models.Model):
     user = models.ForeignKey(User, on_delete=None, related_name="direct_messages")
     channel = models.ForeignKey(Channel, on_delete=None)
     is_close = models.BooleanField(default=False)
+
+    def active(self):
+        if not self.is_close:
+            return
+
+        self.is_close = False
+        self.save()
 
 
 post_save.connect(fanout_message, sender=Message)

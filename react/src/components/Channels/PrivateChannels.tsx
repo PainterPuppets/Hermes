@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react';
 import ChatStore from 'store/ChatStore';
+import UIStore from 'store/UIStore';
 import UserAvatar from '../../components/UserAvatar';
 import ActivityIcon from '../../icons/Activity';
 import LibraryIcon from '../../icons/Library';
@@ -101,8 +102,7 @@ const StyledChannel = styled.div<{ smallHeight?: boolean }>`
   }
 `;
 
-const PrivateChannels = observer(({ selectedChannelId, onChannelClick }: any) => {
-  console.log(ChatStore.directMessages)
+const PrivateChannels = observer(({ onChannelClick }: any) => {
 
   return (
   <StyledPrivateChannels>
@@ -125,17 +125,17 @@ const PrivateChannels = observer(({ selectedChannelId, onChannelClick }: any) =>
 
     <div className="header">Direct Messages</div>
 
-    {ChatStore.directMessages.map(directMessage => {
+    {ChatStore.directChannels.map(directMessage => {
       const user = directMessage.target;
 
       return (
         <StyledChannel
           key={directMessage.id}
-          className={directMessage.id === selectedChannelId ? 'active' : ''}
+          className={directMessage.id === UIStore.selectedPrivateChannelId ? 'active' : ''}
           onClick={() => onChannelClick(null, directMessage.id)}
           smallHeight
         >
-          <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${user.username}.png`} />
+          <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar_url} />
           <span className="username">{user.username}</span>
           <button className="close" />
         </StyledChannel>

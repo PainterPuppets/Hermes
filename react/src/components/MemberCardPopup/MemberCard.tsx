@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import UIStore from 'store/UIStore';
 
 import MemberRolesList from './MemberRolesList';
 import GameActivity from './GameActivity';
@@ -149,8 +150,8 @@ const MemberCard = ({ member, guildRolesList }: any) => (
   <StyledMemberCard isPlaying={!!member.activity}>
     <div className="header">
       <div className="user-data">
-        <UserAvatar className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} isBig>
-          <div className="view-profile">View Profile</div>
+        <UserAvatar className="avatar-wrapper" onClick={() => UIStore.onClickUser(member)} avatarUrl={`https://api.adorable.io/avatars/285/${member.username}.png`} isBig>
+          <div className="view-profile">Message</div>
         </UserAvatar>
 
         <div className="username">

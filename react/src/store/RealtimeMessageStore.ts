@@ -7,7 +7,11 @@ class RealtimeMessageStore {
 
 
   @action init = async () => {
-    await WebSocketStore.subscribe(`message-recieve#${AuthStore.user.id}`, (data: any) => { console.log(data) });
+    await WebSocketStore.subscribe(`message-recieve#${AuthStore.user.id}`, (data: any) => { 
+      console.log('收到消息了！！')
+      console.log(data)
+    });
+
     this.initialize = false
   }
   

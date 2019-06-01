@@ -43,7 +43,7 @@ const StyledIconButton = styled.span`
 
 const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick }: any) => (
   <StyledHeaderActionBar>
-    <Tooltip title="Mute Channel" placement="bottom">
+    {/* <Tooltip title="Mute Channel" placement="bottom">
       <StyledIconButton>
         <NotificationBellIcon />
       </StyledIconButton>
@@ -53,7 +53,7 @@ const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick }: any) => 
       <StyledIconButton>
         <PinIcon />
       </StyledIconButton>
-    </Tooltip>
+    </Tooltip> */}
 
     <Tooltip title="Members list" placement="bottom">
       <StyledIconButton onClick={onMembersToggleClick}>
@@ -65,11 +65,11 @@ const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick }: any) => 
 
     <div className="divider" />
 
-    <Tooltip title="Mentions" placement="bottom">
+    {/* <Tooltip title="Mentions" placement="bottom">
       <StyledIconButton>
         <MentionIcon />
       </StyledIconButton>
-    </Tooltip>
+    </Tooltip> */}
 
     <Tooltip title="Help" placement="bottom">
       <StyledIconButton>

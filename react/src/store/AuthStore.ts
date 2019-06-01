@@ -20,7 +20,6 @@ class AuthStore {
 
 
   @action update(user: any) {
-    console.log(user);
     this.isAuthenticated = user.is_authenticated;
     this.user.id = user.id;
     this.user.username = user.username;

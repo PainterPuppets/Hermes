@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
-import AuthStore from 'store/AuthStore';
+import UIStore from 'store/UIStore';
 import CommonStore from 'store/CommonStore';
 import colors from '../utils/colors';
 import ScrollbarStyles from './ScrollbarStyles';
@@ -44,98 +44,11 @@ const StyledApp = styled.div`
 class App extends React.Component<any, IState> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      currentArea: 'CHAT',
-      selectedGuildId: 1111,
-      selectedChannelsId: {},
-      selectedPrivateChannelId: 333
-    }
   }
 
   componentDidMount() {
     CommonStore.initApp();
   }
-
-  getSelectedGuild = () => {
-    const { selectedGuildId } = this.state;
-    return data.guilds.find(g => g.id === selectedGuildId);
-  };
-
-  getGuildSelectedChannel = () => {
-    const guild = this.getSelectedGuild();
-    if (!guild) return undefined;
-
-    const categoriesChannels = guild.categories.map(c => c.channels);
-    // Here we could use flat() to merge the channels but it is still experimental
-    const channels = ([] as IChannel[]).concat(...categoriesChannels);
-
-    const id = this.state.selectedChannelsId[guild.id] || guild.welcomeChannelId;
-    return channels.find((channel: { id: any; }) => channel.id === id);
-  };
-
-  getSelectedChannelData = () => {
-    const { currentArea, selectedPrivateChannelId } = this.state;
-    if (currentArea === 'HOME') {
-      const dm = data.directMessages.find(dm => dm.id === selectedPrivateChannelId);
-      if (!dm) {
-        return {
-          id: 0,
-          name: "",
-          messages: []
-        };
-      }
-
-      return {
-        id: selectedPrivateChannelId,
-        name: data.users[dm.userId].username,
-        messages: dm ? dm.messages : []
-      };
-    }
-    if (currentArea === 'CHAT') {
-      const channel = this.getGuildSelectedChannel();
-      if (!channel) {
-        return {
-
-        }
-      }
-      return {
-        id: channel.id,
-        name: channel.name,
-        messages: channel.messages || []
-      };
-    }
-
-    return {
-      id: 0,
-      name: "",
-      messages: []
-    };
-  };
-
-  handleHomeClick = () => {
-    this.setState({ selectedGuildId: null, currentArea: 'HOME' });
-  };
-
-  handleGuildClick = (guildId: any) => {
-    this.setState({ selectedGuildId: guildId, currentArea: 'CHAT' });
-  };
-
-  handleChannelClick = (guildId: any, channelId: any) => {
-    const { currentArea } = this.state;
-    if (currentArea === 'HOME') {
-      this.setState({
-        selectedPrivateChannelId: channelId
-      });
-    }
-    if (currentArea === 'CHAT') {
-      this.setState({
-        selectedChannelsId: {
-          ...this.state.selectedChannelsId,
-          [guildId]: channelId
-        }
-      });
-    }
-  };
 
   render() {
     if (!CommonStore.initialized) {
@@ -144,10 +57,6 @@ class App extends React.Component<any, IState> {
           <Loading />
         </StyledApp>)
     }
-    const { selectedGuildId } = this.state;
-    const selectedGuild = this.getSelectedGuild();
-    const showPrivateChannels = !selectedGuild;
-    const selectedChannelData = this.getSelectedChannelData();
 
     return (
       <StyledApp>
@@ -155,35 +64,30 @@ class App extends React.Component<any, IState> {
         <ScrollbarStyles />
 
         <Navbar
-          loading={true}
-          onHomeClick={this.handleHomeClick}
-          onGuildClick={this.handleGuildClick}
-          selectedGuildId={selectedGuildId}
+          onHomeClick={UIStore.handleHomeClick}
+          onGuildClick={UIStore.handleGuildClick}
+          selectedGuildId={UIStore.selectedGuildId}
         />
         <Channels
-          showPrivateChannels={showPrivateChannels}
-          guild={selectedGuild}
-          selectedChannelId={selectedChannelData.id}
-          onChannelClick={this.handleChannelClick}
+          showPrivateChannels={UIStore.isPrivate}
+          guild={UIStore.selectedGuild}
+          selectedChannelId={UIStore.selectedChannelData.id}
+          onChannelClick={UIStore.handleChannelClick}
         />
         <Chat
           className="app-content"
-          isPrivate={showPrivateChannels}
-          channelName={selectedChannelData.name}
-          guild={selectedGuild}
-          messages={selectedChannelData.messages}
+          isPrivate={UIStore.isPrivate}
+          channelName={UIStore.selectedChannelData.name}
+          guild={UIStore.selectedGuild}
+          messages={UIStore.selectedChannelData.messages}
         />
         <MemberCardPopup
-          guildRolesList={selectedGuild ? selectedGuild.roles : []}
+          guildRolesList={UIStore.selectedGuild ? UIStore.selectedGuild.roles : []}
           ref={node => {
             MemberCardPopup.instance = MemberCardPopup.instance || node;
           }}
         />
-        <SearchModal
-          onSelectUser={(user: any) => {
-            console.log(user)
-          }}
-        />
+        <SearchModal />
         <UserProfileModal />
       </StyledApp>
     );
