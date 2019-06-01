@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import emojiSprite from '../../icons/emojiSprite.png';
 
 const EMOJIS_COUNT = 50;
 const EMOJIS_COLUMNS = 11;
@@ -29,7 +30,7 @@ const StyledEmojiPickerButton = styled.button`
     width: 22px;
     height: 22px;
 
-    background-image: url('https://i.imgur.com/GCsoD7z.png');
+    background-image: url(${emojiSprite});
     background-repeat: no-repeat;
     background-size: 242px 110px;
 

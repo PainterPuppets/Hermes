@@ -46,7 +46,7 @@ const ButtonContainer = styled.button<{ outerWidth: number, iconWidth: number, i
 
 export default () => (
   <StyledButtonsBar>
-    <ButtonContainer outerWidth={34} iconWidth={20} iconHeight={20}>
+    {/* <ButtonContainer outerWidth={34} iconWidth={20} iconHeight={20}>
       <div>
         <Gift />
       </div>
@@ -56,7 +56,7 @@ export default () => (
       <div>
         <GifPicker />
       </div>
-    </ButtonContainer>
+    </ButtonContainer> */}
 
     <EmojiPickerButton />
   </StyledButtonsBar>
