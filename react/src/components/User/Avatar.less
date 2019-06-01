@@ -1,0 +1,41 @@
+@import '~antd/lib/style/themes/default.less';
+
+.avatar-uploader {
+    .ant-upload {
+      margin: 0px;
+      border-radius: 50%;
+      border: 1px solid @primary-color;
+      width: 100px;
+      height: 100px;
+      .ant-upload {
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 0px !important;
+        border: 0px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        &:hover {
+          .avatar-layer {
+            opacity: 1;
+          }
+        }
+        .avatar-layer {
+          display: flex;
+          opacity: 0;
+          transition: all .3s;
+          color: #fff;
+          background-color: rgba(0, 0, 0, 0.6);
+          width: 98px; // 2px smaller than avatar because of border-width
+          height: 98px;
+          border-radius: 50%;
+          font-size: 12px;
+          justify-content: center;
+          align-items: center;
+          .loading-icon {
+            font-size: 2rem;
+          }
+        }
+      }
+    }
+  }
+  

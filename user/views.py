@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 
-from user.serializers import UserSerializer, SignupSerializer, LoginSerializer, UserSerializerForMe
+from user.serializers import UserSerializer, SignupSerializer, LoginSerializer, UserSerializerForMe, AvatarSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -78,6 +78,16 @@ class UserViewSet(viewsets.ModelViewSet):
         )
 
         return Response({u'detail': u'注册成功'}, status=status.HTTP_200_OK)
+    
+
+    @list_route(methods=['POST'], permission_classes=[IsAuthenticated])
+    def upload_avatar(self, request):
+        print ('upload_avatar')
+        avatar_serializer = AvatarSerializer(data=request.data, context={'user': request.user})
+        avatar_serializer.is_valid(raise_exception=True)
+        avatar_serializer.save(user=request.user)
+        
+        return Response(UserSerializerForMe(request.user).data, status=status.HTTP_202_ACCEPTED)
 
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated])
     def logout(self, request):

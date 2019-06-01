@@ -24,22 +24,21 @@ local_settings.py
 media/
 *.pid
 celerybeat-schedule
-node_modules
-static/build
-static/react
-templates/react/react.html
 *~
 celerybeat-schedule.*
 *.log
-/templates/react/react_myadmin.html
-dist
-/templates/react/index.html
-/templates/base.html
+templates/*
 templates/base.html
-static/i18n/*.json
+
+# static
+static/*
+!static/favicon.ico
+
+# react
 react/.cache-loader
 yarn-error.log
 typings
+node_modules
 
 ### useless files clone from cloudjudge ###
 cj/tempgen/cli.py

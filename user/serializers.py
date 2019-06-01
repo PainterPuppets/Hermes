@@ -2,15 +2,26 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
 
-class UserMiniSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
         fields = (
             'id',
             'username',
+            'avatar_url',
         )
+    
+    def get_avatar_url(self, obj):
+        if obj.profile.avatar :
+            return obj.profile.avatar.url
 
-class UserSerializerForMe(serializers.ModelSerializer):
+        return 'https://api.adorable.io/avatars/285/' + obj.username + '.png'
+
+
+class UserSerializerForMe(UserSerializer):
     class Meta:
         model = User
         fields = (
@@ -19,13 +30,8 @@ class UserSerializerForMe(serializers.ModelSerializer):
             'email',
             'is_authenticated',
             'is_superuser',
+            'avatar_url',
         )
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email')
 
 
 class LoginSerializer(serializers.Serializer):
@@ -38,3 +44,12 @@ class SignupSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
+
+class AvatarSerializer(serializers.Serializer):
+    avatar = serializers.ImageField()
+
+    def save(self, **kwargs):
+        user = self.context['user']
+        avatar = self.validated_data['avatar']
+        user.profile.avatar = avatar
+        user.save()

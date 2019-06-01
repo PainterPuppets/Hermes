@@ -90,7 +90,7 @@ const StyledIconButton = styled.button`
 export default observer(() => {
   return (
     <StyledUserFooter>
-      <UserAvatar onClick={CommonStore.openProfileModal} className="avatar-wrapper" avatarUrl={`https://api.adorable.io/avatars/285/${AuthStore.user.username}.png`} fadeHover />
+      <UserAvatar onClick={CommonStore.openProfileModal} className="avatar-wrapper" avatarUrl={AuthStore.user.avatarUrl} fadeHover />
 
       <div className="content">
         <div className="username">{AuthStore.user.username}</div>

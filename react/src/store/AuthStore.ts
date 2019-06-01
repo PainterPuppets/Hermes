@@ -9,6 +9,7 @@ class AuthStore {
   @observable user = {
     id: 0,
     username: '',
+    email: '',
     avatarUrl: DefaultAvatar,
     isSuperuser: false,
   }
@@ -23,6 +24,7 @@ class AuthStore {
     this.isAuthenticated = user.is_authenticated;
     this.user.id = user.id;
     this.user.username = user.username;
+    this.user.email = user.email;
     this.user.isSuperuser = user.is_superuser;
     if (user.avatar_url) { this.user.avatarUrl = user.avatar_url }
   }
@@ -67,7 +69,7 @@ class AuthStore {
     formData.append('avatar', avatar);
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    return BaseProvider.post('/api/auth/change_avatar', formData, config).then((res) => {
+    return BaseProvider.post('/api/user/upload_avatar/', formData, config).then((res) => {
       this.update(res.data);
     });
   }
@@ -86,6 +88,7 @@ class AuthStore {
     this.user = {
       id: 0,
       username: '',
+      email: '',
       avatarUrl: DefaultAvatar,
       isSuperuser: false,
     }

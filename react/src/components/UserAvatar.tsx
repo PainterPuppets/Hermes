@@ -49,7 +49,7 @@ const StyledUserAvatar = styled.div<{ size: string, fadeHover: boolean, statusSi
   }
 `;
 
-const UserAvatar = ({ className, avatarUrl, isBig, fadeHover, children, onClick }: any) => {
+const UserAvatar = ({ className, avatarUrl, isBig, fadeHover, children, onClick, status="online" }: any) => {
   const avatarSize = (isBig ? 90 : 30) + 'px';
   const statusSize = (isBig ? 18 : 10) + 'px';
 
@@ -68,7 +68,7 @@ const UserAvatar = ({ className, avatarUrl, isBig, fadeHover, children, onClick 
       >
         {children}
       </div>
-      <div className="status online" />
+      {status && <div className={`status ${status}`} />}
     </StyledUserAvatar>
   );
 };
