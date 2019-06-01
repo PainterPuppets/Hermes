@@ -39,6 +39,7 @@ const StyledChannel = styled.div<{ smallHeight?: boolean }>`
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
+  user-select: none;
 
   &.active {
     background-color: ${colors.privateChannelSelectedBackground};
@@ -106,7 +107,7 @@ const PrivateChannels = observer(({ onChannelClick }: any) => {
 
   return (
   <StyledPrivateChannels>
-    <StyledChannel>
+    {/* <StyledChannel>
       <ActivityIcon />
       <span>Activity</span>
     </StyledChannel>
@@ -117,10 +118,13 @@ const PrivateChannels = observer(({ onChannelClick }: any) => {
     <StyledChannel>
       <StoreIcon />
       <span>Store</span>
-    </StyledChannel>
-    <StyledChannel>
+    </StyledChannel> */}
+    <StyledChannel
+      onClick={UIStore.onClickHome}
+      className={UIStore.selectedPrivateChannelId ? '' : 'active'}
+    >
       <PersonWavingIcon />
-      <span>Friends</span>
+      <span>Home</span>
     </StyledChannel>
 
     <div className="header">Direct Messages</div>

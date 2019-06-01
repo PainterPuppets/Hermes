@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Empty } from 'antd';
 
 import ContentHeader from '../ContentHeader';
 import HeaderActionBar from './HeaderActionBar';
@@ -11,6 +12,26 @@ import MemberCardPopup from '../MemberCardPopup';
 
 import constants from '../../utils/constants';
 import colors from '../../utils/colors';
+import HomeEmpty from '../../icons/HomeEmpty.svg';
+
+const StyledEmpty = styled.div` 
+  height: 100%;
+  .ant-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    user-select: none;
+    .ant-empty-image {
+      height: 240px;
+      padding: 40px;
+    }
+    .ant-empty-description {
+      color: #72767d;
+    }
+  }
+`;
 
 const StyledChat = styled.div`
   background: ${colors.grayLight};
@@ -57,7 +78,7 @@ const Chat = ({ className, isPrivate, channelName, guild, messages }: any) => {
   return (
     <StyledChat className={className}>
       <ContentHeader
-        content={<ChannelName name={channelName} isHeader isUser={isPrivate} textColor="#fff" />}
+        content={<ChannelName name={channelName || 'Home'} isHeader isUser={isPrivate} textColor="#fff" />}
         rightContent={
           <HeaderActionBar
             isMembersListActive={membersListVisible}
@@ -66,25 +87,33 @@ const Chat = ({ className, isPrivate, channelName, guild, messages }: any) => {
         }
       />
 
-      <div className="content-wrapper">
-        <div className="messages-container">
-          <MessagesWrapper
-            guild={guild}
-            messages={messages}
-            channelName={channelName}
-            isPrivate={isPrivate}
-          />
-          <NewMessageWrapper channelName={channelName} isPrivate={isPrivate} />
-        </div>
+      {channelName ? 
+        <div className="content-wrapper">
+          <div className="messages-container">
+            <MessagesWrapper
+              guild={guild}
+              messages={messages}
+              channelName={channelName}
+              isPrivate={isPrivate}
+            />
+            <NewMessageWrapper channelName={channelName} isPrivate={isPrivate} />
+          </div>
 
-        {!isPrivate && membersListVisible && (
-          <MembersList
-            guildRolesList={guild.roles}
-            members={guild.members}
-            onMemberClick={handleMemberListMemberClick}
+          {!isPrivate && membersListVisible && (
+            <MembersList
+              guildRolesList={guild.roles}
+              members={guild.members}
+              onMemberClick={handleMemberListMemberClick}
+            />
+          )}
+        </div> :
+        <StyledEmpty>
+          <Empty
+            image={HomeEmpty}
+            description={<span>左边选择一个频道来开始聊天</span>}
           />
-        )}
-      </div>
+        </StyledEmpty>
+      }
     </StyledChat>
   );
 };

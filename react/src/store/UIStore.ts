@@ -6,16 +6,21 @@ import ChatStore from './ChatStore';
 
 class UIStore {
   @observable currentArea: string = 'HOME';
-  @observable selectedGuildId: number | null = 1111;
+  @observable selectedGuildId: number | null = null;
   @observable selectedChannelsId: { [guildId: number]: number; } = {};
-  @observable selectedPrivateChannelId: number | string = 333;
+  @observable selectedPrivateChannelId: number | string | null = null;
 
   @computed get isPrivate() {
     return !this.selectedGuildId;
   }
 
+  @action onClickHome = () => {
+    this.currentArea = 'HOME';
+    this.selectedGuildId = null;
+    this.selectedPrivateChannelId = null;
+  }
+
   @action onClickUser = (target: IUser) => {
-    console.log(target);
     const channel = ChatStore.getOrCreateDirectCannel(target);
     this.currentArea = 'HOME';
     this.selectedGuildId = null;
@@ -101,9 +106,9 @@ class UIStore {
 
   @action reset = () => {
     this.currentArea = 'HOME';
-    this.selectedGuildId = 1111;
+    this.selectedGuildId = null;
     this.selectedChannelsId = {};
-    this.selectedPrivateChannelId = 333;
+    this.selectedPrivateChannelId = null;
   }
 }
 
