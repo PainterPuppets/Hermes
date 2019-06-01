@@ -41,7 +41,7 @@ const StyledIconButton = styled.span`
   }
 `;
 
-const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick }: any) => (
+const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick, isPrivate }: any) => (
   <StyledHeaderActionBar>
     {/* <Tooltip title="Mute Channel" placement="bottom">
       <StyledIconButton>
@@ -55,11 +55,13 @@ const HeaderActionBar = ({ isMembersListActive, onMembersToggleClick }: any) => 
       </StyledIconButton>
     </Tooltip> */}
 
-    <Tooltip title="Members list" placement="bottom">
-      <StyledIconButton onClick={onMembersToggleClick}>
-        <PeopleIcon className={isMembersListActive ? 'active' : ''} />
-      </StyledIconButton>
-    </Tooltip>
+    {!isPrivate &&
+      <Tooltip title="Members list" placement="bottom">
+        <StyledIconButton onClick={onMembersToggleClick}>
+          <PeopleIcon className={isMembersListActive ? 'active' : ''} />
+        </StyledIconButton>
+      </Tooltip>
+    }
 
     <HeaderSearchBar />
 

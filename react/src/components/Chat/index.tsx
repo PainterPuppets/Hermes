@@ -81,6 +81,7 @@ const Chat = ({ className, isPrivate, channelName, guild, messages }: any) => {
         content={<ChannelName name={channelName || 'Home'} isHeader isUser={isPrivate} textColor="#fff" />}
         rightContent={
           <HeaderActionBar
+            isPrivate={isPrivate}
             isMembersListActive={membersListVisible}
             onMembersToggleClick={toggleMembersListVisible}
           />
