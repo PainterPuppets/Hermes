@@ -7,7 +7,9 @@ import UserAvatar from '../UserAvatar';
 import CommonStore from 'store/CommonStore';
 import AuthStore from 'store/AuthStore';
 import UnmuteIcon from '../../icons/Unmute';
+import MuteIcon from '../../icons/Mute';
 import HeadphonesIcon from '../../icons/Headphones';
+import UnDeafenIcon from '../../icons/UnDeafen';
 import GearIcon from '../../icons/Gear';
 
 import colors from '../../utils/colors';
@@ -96,17 +98,31 @@ export default observer(() => {
       </div>
 
       <div className="buttons">
-        <Tooltip title="Unmute" placement="top">
-          <StyledIconButton>
-            <UnmuteIcon />
-          </StyledIconButton>
-        </Tooltip>
+        {CommonStore.mute ? 
+          <Tooltip title="Unmute" placement="top">
+            <StyledIconButton onClick={CommonStore.onUnMute}>
+              <UnmuteIcon />
+            </StyledIconButton>
+          </Tooltip> :
+          <Tooltip title="Mute" placement="top">
+            <StyledIconButton onClick={CommonStore.onMute}>
+              <MuteIcon />
+            </StyledIconButton>
+          </Tooltip>
+        }
 
-        <Tooltip title="Deafen" placement="top">
-          <StyledIconButton>
-            <HeadphonesIcon />
-          </StyledIconButton>
-        </Tooltip>
+        {CommonStore.deafen ? 
+          <Tooltip title="Undeafen" placement="top">
+            <StyledIconButton onClick={CommonStore.onUnDeafen}>
+              <UnDeafenIcon />
+            </StyledIconButton>
+          </Tooltip> :    
+          <Tooltip title="Deafen" placement="top">
+            <StyledIconButton onClick={CommonStore.onDeafen}>
+              <HeadphonesIcon />
+            </StyledIconButton>
+          </Tooltip> 
+        }
 
         <Tooltip title="User Settings" placement="top">
           <StyledIconButton onClick={CommonStore.openProfileModal}>

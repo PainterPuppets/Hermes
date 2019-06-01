@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import CommonStore from 'store/CommonStore';
 import searchBarClearUrl from '../../icons/searchBarClear.svg';
 import searchBarEyeGlassUrl from '../../icons/searchBarEyeGlass.svg';
 
@@ -96,7 +97,7 @@ const HeaderSearchBar = () => {
   const hasText = !!text;
 
   return (
-    <StyledHeaderSearchBar expanded={hasText}>
+    <StyledHeaderSearchBar expanded={hasText} onClick={CommonStore.openSearchModal}>
       <div className="input-wrapper">
         <input
           type="text"

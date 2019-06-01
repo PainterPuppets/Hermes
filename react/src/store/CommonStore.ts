@@ -12,6 +12,10 @@ class CommonStore {
 
   @observable profileModalVisible = false;
 
+  @observable mute = true;
+  @observable deafen = false;
+
+
   @computed get initialized() {
     return !AuthStore.initialize && !RealtimeMessageStore.initialize && !ChatStore.initialize;
   }
@@ -65,11 +69,30 @@ class CommonStore {
     this.profileModalVisible = false;
   }
 
+  @action onMute = () => {
+    this.mute = true;
+  }
+  @action onUnMute = () => {
+    this.mute = false;
+    this.deafen = false;
+  }
+
+  @action onDeafen = () => {
+    this.deafen = true;
+    this.mute = true;
+  }
+  @action onUnDeafen = () => {
+    this.deafen = false;
+  }
+
   @action reset = () => {
     this.searchLoading = false;
     this.searchValue = [];
     this.searchModalVisible = false;
     this.profileModalVisible = false;
+
+    this.mute = true;
+    this.deafen = false;
   }
 }
 
