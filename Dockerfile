@@ -8,4 +8,6 @@ RUN cd react && yarn && yarn production
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "./entrypoint.sh"]
+RUN python manage.py migrate
+
+CMD ["python", "manage.py runserver 0.0.0.0:9001"]
