@@ -59,15 +59,11 @@ class ChatStore {
         return;
       }
 
-      if (index + 1 === messages.length) {
-        currentValue.messages.push(message)
-        groups.push(currentValue);
-        currentValue = {};
-        return;
-      }
-
       currentValue.messages.push(message)
     })
+
+    groups.push(currentValue);
+    currentValue = {};
   
     return groups
   }

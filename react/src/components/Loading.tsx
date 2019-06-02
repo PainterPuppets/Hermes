@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import DiscordIcon from '../icons/Discord';
+// import DiscordIcon from '../icons/Discord.svg';
 import LoadingVideo from '../icons/loading.webm';
-import ReactPlayer from 'react-player'
 import colors from '../utils/colors';
 
 const StyledLoading = styled.div`
@@ -21,15 +20,15 @@ const StyledLoadingContent = styled.span`
 `;
 
 
-const LoadingIcon = styled(DiscordIcon)`
-  color: ${colors.primary};
-  width: 30%;
-  height: 30%;
-  max-width: 160px;
-  max-height: 160px;
-  min-width: 80px;
-  min-height: 80px;
-`;
+// const LoadingIcon = styled(DiscordIcon)`
+//   color: ${colors.primary};
+//   width: 30%;
+//   height: 30%;
+//   max-width: 160px;
+//   max-height: 160px;
+//   min-width: 80px;
+//   min-height: 80px;
+// `;
 
 
 class Loading extends React.Component<any, any> {
@@ -54,8 +53,10 @@ class Loading extends React.Component<any, any> {
   render() {
     return (
     <StyledLoading>
-      <ReactPlayer loop playing playsinline url={LoadingVideo}/>
-      {/* <LoadingIcon /> */}
+      <video loop autoPlay playsInline >
+        <source src={LoadingVideo} />
+        {/* <source src={'../icons/Discord.svg'} /> */}
+      </video>
       <StyledLoadingContent>
         {this.contentSequence[this.state.value]}
       </StyledLoadingContent>
