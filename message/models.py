@@ -17,7 +17,7 @@ class Channel(models.Model):
     last_activity_at = models.DateTimeField(auto_now_add=True)
 
     def send_message(self, sender, content):
-        Message.objects.create(
+        message = Message.objects.create(
             user=sender,
             content=content,
             channel=self,
@@ -29,6 +29,8 @@ class Channel(models.Model):
 
         self.last_activity_at = timezone.now()
         self.save()
+
+        return message
 
 
 class Message(models.Model):

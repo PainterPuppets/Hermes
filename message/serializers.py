@@ -4,15 +4,21 @@ from message.services import ChannelService
 from user.serializers import UserSerializer
 
 class MessageSerializer(serializers.ModelSerializer):
+    channel_id = serializers.SerializerMethodField(read_only=True)
     user = UserSerializer()
 
     class Meta:
         model = Message
         fields = (
+            'id',
+            'channel_id',
             'content',
             'time',
             'user',
         )
+
+    def get_channel_id(self, obj):
+        return ChannelService.get_channel_id(obj.channel)
 
 
 class SignalSerializer(serializers.ModelSerializer):

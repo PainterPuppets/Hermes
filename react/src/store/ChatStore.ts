@@ -113,7 +113,13 @@ class ChatStore {
       return;
     }
   
-    return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { content });
+    return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { content }).then((res) => {
+      let channel = this.getDirectCannel(id);
+      if (!channel) {
+        return;
+      }
+      channel.messages.push(res.data);
+    });
   }
 
   @action getdirectChannels = () => {

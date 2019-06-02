@@ -32,8 +32,8 @@ class ChatViewSet(ViewSet):
         serializer.is_valid(raise_exception=True)
         content = serializer.validated_data['content']
 
-        channel.send_message(request.user, content)
-        return Response(status=status.HTTP_200_OK)
+        message = channel.send_message(request.user, content)
+        return Response(MessageSerializer(message).data, status=status.HTTP_200_OK)
 
     
     @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='directs')

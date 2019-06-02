@@ -9,6 +9,12 @@ class RealtimeMessageStore {
 
   @action init = async () => {
     await WebSocketStore.subscribe(`message-receive#${AuthStore.user.id}`, (msg: any) => { 
+      console.log('receive new message!')
+      console.log(msg);
+      if (msg.data.user.id === AuthStore.user.id) {
+        console.log('duplicate self message!')
+        return;
+      }
       ChatStore.receiveNewMessage(msg.data);
     });
 
