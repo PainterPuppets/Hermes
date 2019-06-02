@@ -655,13 +655,6 @@ module.exports = function () {
           return re.exec(filePath.replace(/\\/g, '/'))[1];
         },
       })
-      // new AliyunossWebpackPlugin({
-      //   buildPath: paths.appBuild,
-      //   bucket: 'painter-hermes',
-      //   region: 'oss-cn-shanghai',
-      //   accessKeyId: 'LTAIJvdAAb61Gv1b',
-      //   accessKeySecret: 'QFfNTmLEu93xoY1SdzymKfCTv9Wn3v',
-      // })
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
