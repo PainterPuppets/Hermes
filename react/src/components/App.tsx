@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import UIStore from 'store/UIStore';
 import CommonStore from 'store/CommonStore';
+import WebSocketStore from 'store/WebSocketStore';
 import colors from '../utils/colors';
 import ScrollbarStyles from './ScrollbarStyles';
 import GlobalStyle from './GlobalStyle';
@@ -51,11 +52,12 @@ class App extends React.Component<any, IState> {
   }
 
   render() {
-    if (!CommonStore.initialized) {
+    if (!CommonStore.initialized || !WebSocketStore.connected) {
       return (
         <StyledApp>
           <Loading />
-        </StyledApp>)
+        </StyledApp>
+      )
     }
 
     return (

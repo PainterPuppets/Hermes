@@ -30,7 +30,6 @@ class WebSocketStore {
       this._centrifuge.on('connect', () => {
         this.connected = true;
         this.initial = true;
-        console.log('connected!')
       });
 
       this._centrifuge.on('disconnect', () => {

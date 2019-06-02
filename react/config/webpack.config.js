@@ -23,6 +23,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const WebpackAliyunOss = require('webpack-aliyun-oss')
 // import color from '../src/utils/colors'
 const colors = require('./colors');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -640,6 +641,27 @@ module.exports = function () {
         silent: true,
         formatter: typescriptFormatter,
       }),
+      // upload file to ali oss
+      isEnvProduction &&
+      new WebpackAliyunOss({
+        dist: 'hermes/',
+        region: 'oss-cn-shanghai',
+        accessKeyId: 'LTAI7leHEIXpy8oG',
+        accessKeySecret: '56B74IXf8RGbyivOtmDzlSZiLwBfYF',
+        bucket: 'yn-admin-website',
+        setOssPath(filePath) {
+          // some operations to filePath
+          let re = /.*(static[\s\S]+)/g
+          return re.exec(filePath.replace(/\\/g, '/'))[1];
+        },
+      })
+      // new AliyunossWebpackPlugin({
+      //   buildPath: paths.appBuild,
+      //   bucket: 'painter-hermes',
+      //   region: 'oss-cn-shanghai',
+      //   accessKeyId: 'LTAIJvdAAb61Gv1b',
+      //   accessKeySecret: 'QFfNTmLEu93xoY1SdzymKfCTv9Wn3v',
+      // })
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

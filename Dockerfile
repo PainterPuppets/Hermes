@@ -8,6 +8,4 @@ RUN cd react && yarn && yarn production
 
 RUN pip install -r requirements.txt
 
-EXPOSE 9000 9000
-
 CMD ["sh", "./entrypoint.sh"]

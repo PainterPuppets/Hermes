@@ -10,8 +10,6 @@
     "fix": "eslint src --ext .ts --fix"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.132",
-    "@types/sockjs-client": "^1.1.1",
     "agora-rtc-sdk": "^2.6.1",
     "antd": "^3.19.1",
     "axios": "^0.18.0",
@@ -63,6 +61,7 @@
     "react-loadable": "^5.5.0",
     "react-media": "^1.9.2",
     "react-onclickoutside": "^6.8.0",
+    "react-player": "^1.11.0",
     "react-router-dom": "^4.3.1",
     "resolve": "1.10.0",
     "rimraf": "^2.6.3",
@@ -73,12 +72,14 @@
     "styled-components": "^4.2.0",
     "terser-webpack-plugin": "1.2.2",
     "typescript": "3.3.3333",
-    "url-loader": "1.1.2"
+    "url-loader": "1.1.2",
+    "webpack-aliyun-oss": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.2.2",
     "@svgr/webpack": "4.1.0",
     "@types/agora-rtc-sdk": "^2.3.0",
+    "@types/lodash": "^4.14.132",
     "@types/node": "11.10.4",
     "@types/qs": "^6.5.3",
     "@types/react": "16.8.6",
@@ -88,6 +89,7 @@
     "@types/react-onclickoutside": "^6.7.2",
     "@types/react-router": "^4.4.4",
     "@types/react-router-dom": "^4.3.1",
+    "@types/sockjs-client": "^1.1.1",
     "@types/styled-components": "^4.1.15",
     "eslint": "5.12.0",
     "eslint-config-react-app": "^3.0.7",
