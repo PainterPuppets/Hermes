@@ -1,4 +1,4 @@
-FROM django:python3-onbuild
+FROM python:3.7
 
 COPY . /home/app
 WORKDIR /home/app
