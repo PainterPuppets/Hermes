@@ -62,8 +62,10 @@ class ChatStore {
       currentValue.messages.push(message)
     })
 
-    groups.push(currentValue);
-    currentValue = {};
+    if (currentValue.user) {
+      groups.push(currentValue);
+      currentValue = {};
+    }
   
     return groups
   }

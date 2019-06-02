@@ -65,6 +65,7 @@ class MessagesWrapper extends Component<any, any> {
   };
 
   render() {
+    console.log(ChatStore.groupMessage)
     return (
       <StyledMessagesWrapper>
         <ScrollableArea>
