@@ -27,8 +27,6 @@ celerybeat-schedule
 *~
 celerybeat-schedule.*
 *.log
-templates/*
-templates/base.html
 
 # static
 static/*
