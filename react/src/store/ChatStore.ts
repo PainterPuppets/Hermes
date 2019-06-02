@@ -37,6 +37,8 @@ class ChatStore {
     if (!channel || !channel.messages) {
       return [];
     }
+
+    console.log('groupMessage')
   
     let messages = channel.messages;
     const groups: IMessageGroup[] = [];
@@ -70,12 +72,12 @@ class ChatStore {
     return groups
   }
 
-  @action getOrCreateDirectCannelFromId = (id: string) => {
+  @action getOrCreateDirectCannelFromId = (id: string, user?: IUser) => {
     const channel = this.getDirectCannel(id);
     if (channel) {
       return channel;
     }
-    const newChannel: IDirectChannel = { id, target: {} as IUser, messages: [] } as IDirectChannel
+    const newChannel: IDirectChannel = { id, target: (user || ({} as IUser)), messages: [] } as IDirectChannel
     this.directChannels.unshift(newChannel);
     this.syncDirect(id);
     return this.directChannels[0];
@@ -94,7 +96,7 @@ class ChatStore {
   }
 
   @action receiveNewMessage = (msg: any) => {
-    let channel = this.getOrCreateDirectCannelFromId(msg.channel_id);
+    let channel = this.getOrCreateDirectCannelFromId(msg.channel_id, msg.user);
     channel.messages.push(msg);
   }
 
@@ -114,6 +116,8 @@ class ChatStore {
     }
   
     return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { content }).then((res) => {
+      console.log('send success')
+      console.log(res.data)
       let channel = this.getDirectCannel(id);
       if (!channel) {
         return;

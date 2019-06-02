@@ -49,7 +49,30 @@ class ChannelService(object):
             channel = Channel.objects.filter(id=result[2])
             return channel.exists()
 
-        return False
+        return None
+    
+    @classmethod
+    def get_private_channel_target(cls, user, id):
+        pattern = re.compile(r'([\s\S]*)#([\s\S]*)')
+        result = re.search(pattern, id)
+        if not result:
+            return None
+
+        if result[1] is not 'direct' :
+            return None
+
+        pattern = re.compile(r'([\s\S]*)-([\s\S]*)')
+        ids = re.search(pattern, result[2])
+        target_id = filter(id is not user.id for id in [ids[1], ids[2]])[0]
+
+        if not target_id:
+            return None
+
+        user = User.objects.filter(id=target_id)
+        if not user.exists():
+            return None
+        
+        return user.first()
 
 
     @classmethod

@@ -8,7 +8,6 @@ from user.serializers import UserSerializer
 
 
 def push_signal(sender, instance, created, **kwargs):
-    print('push_signal')
     from message.serializers import MessageSerializer, SignalSerializer
     if not created:
         return
@@ -20,7 +19,6 @@ def push_signal(sender, instance, created, **kwargs):
 
 
 def fanout_message(sender, instance, created, **kwargs):
-    print('fanout_message')
     from message.models import Signal, Channel
     if not created:
         return
