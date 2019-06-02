@@ -14,7 +14,7 @@ def push_signal(sender, instance, created, **kwargs):
         return
 
     user = instance.receiver
-    channel_name = WebSocketChannel.MESSAGE_RECIEVE + str(user.id)
+    channel_name = WebSocketChannel.MESSAGE_RECEIVE + str(user.id)
     message = SignalSerializer(instance).data
     WebSocketService.push_message(channel_name, message)
 
@@ -31,6 +31,6 @@ def fanout_message(sender, instance, created, **kwargs):
         Signal.objects.create(
             receiver=user,
             channel=channel,
-            is_recieved=(user != instance.user),
+            is_received=(user != instance.user),
             message=instance
         )

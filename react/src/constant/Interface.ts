@@ -17,6 +17,11 @@ export interface IDirectChannel {
     messages: IMessage[];
 }
 
+export interface IMessageGroup {
+    user: IUser,
+    messages: IMessage[],
+}
+
 export interface IMessage {
     id: number;
     user: IUser;

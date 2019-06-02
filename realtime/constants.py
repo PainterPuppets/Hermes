@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class WebSocketChannel:
-    MESSAGE_RECIEVE = 'message-recieve#'
+    MESSAGE_RECEIVE = 'message-receive#'
 
 
 WEBSOCKET_ENV = 'hermes-'

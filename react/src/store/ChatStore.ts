@@ -1,8 +1,9 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, toJS } from 'mobx';
 import BaseProvider from '../utils/BaseProvider';
 import WebSocketStore from './WebSocketStore';
+import UIStore from './UIStore';
 import AuthStore from './AuthStore';
-import { IDirectChannel, IUser, IMessage } from '../constant/Interface';
+import { IDirectChannel, IUser, IMessage, IMessageGroup } from '../constant/Interface';
 
 class ChatStore {
   @observable initialize = true;
@@ -31,6 +32,55 @@ class ChatStore {
     return this.directChannels[index];
   }
 
+  @computed get groupMessage() {
+    let channel = this.getDirectCannel(UIStore.currentChannelId);
+    if (!channel || !channel.messages) {
+      return [];
+    }
+  
+    let messages = channel.messages;
+    const groups: IMessageGroup[] = [];
+    let currentValue: any = {};
+
+    messages.map((message, index) => {
+      if (index === 0) {
+        currentValue.user = message.user;
+        currentValue.messages = [message]
+        return;
+      }
+  
+      if (message.user.id !== currentValue.user.id) {
+        groups.push(currentValue);
+        currentValue = {};
+        currentValue.user = message.user;
+        currentValue.messages = [message]
+        return;
+      }
+
+      if (index + 1 === messages.length) {
+        currentValue.messages.push(message)
+        groups.push(currentValue);
+        currentValue = {};
+        return;
+      }
+
+      currentValue.messages.push(message)
+    })
+  
+    return groups
+  }
+
+  @action getOrCreateDirectCannelFromId = (id: string) => {
+    const channel = this.getDirectCannel(id);
+    if (channel) {
+      return channel;
+    }
+    const newChannel: IDirectChannel = { id, target: {} as IUser, messages: [] } as IDirectChannel
+    this.directChannels.unshift(newChannel);
+    this.syncDirect(id);
+    return this.directChannels[0];
+  }
+
   @action getOrCreateDirectCannel = (target: IUser) => {
     const id = this.getDirectId(target);
     const channel = this.getDirectCannel(id);
@@ -41,6 +91,11 @@ class ChatStore {
     this.directChannels.unshift(newChannel);
     this.syncDirect(id);
     return this.directChannels[0];
+  }
+
+  @action receiveNewMessage = (msg: any) => {
+    let channel = this.getOrCreateDirectCannelFromId(msg.channel_id);
+    channel.messages.push(msg);
   }
 
   @action syncDirect = (id: string) => {

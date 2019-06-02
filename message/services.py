@@ -88,8 +88,8 @@ class ChannelService(object):
 class MessageService(object):
 
     @classmethod
-    def send_private_message(cls, reciever, sender, content):
-        channel, created = ChannelService.get_or_create_private_channel(sender, reciever)
+    def send_private_message(cls, receiver, sender, content):
+        channel, created = ChannelService.get_or_create_private_channel(sender, receiver)
         message = cls._send_message(sender, content, channel)
 
 

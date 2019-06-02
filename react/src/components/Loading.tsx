@@ -35,17 +35,20 @@ const LoadingIcon = styled(DiscordIcon)`
 class Loading extends React.Component<any, any> {
   
   contentSequence = ['少女祈祷中', '少女祈祷中.', '少女祈祷中..', '少女祈祷中...', '少女祈祷中....']
+  interval: any;
   constructor(props: any) {
     super(props);
     this.state = {
       value: 0,
     };
-  }
 
-  componentDidMount() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({ value: this.state.value === this.contentSequence.length - 1 ? 0 : this.state.value + 1 })
     }, 250);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {

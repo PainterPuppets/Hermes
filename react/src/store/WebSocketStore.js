@@ -17,7 +17,6 @@ class WebSocketStore {
     }
 
     return BaseProvider.get('/api/realtime/config/').then((res) => {
-      console.log(res)
       this.env = res.data.env;
       this._centrifuge = new Centrifuge({
         url: res.data.url,
@@ -53,8 +52,6 @@ class WebSocketStore {
       return this._subscriptions[internalChannelName];
     }
     const subscription = await client.subscribe(internalChannelName, callBack);
-    console.log(this.env)
-    console.log('subscribe ' + internalChannelName + ' success')
     this._subscriptions[internalChannelName] = subscription;
 
     return subscription;

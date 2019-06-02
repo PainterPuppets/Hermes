@@ -7,6 +7,53 @@ import { ICategorie, IChannel, IGuild, IMember, IMessage, IRole, IUser } from '.
 
 let nextMessageId = 900;
 
+const randomMessages = [
+  'Quisque eget sapien scelerisque, sagittis neque sed, rhoncus lacus.',
+  'nam elementum',
+  'cursus viverra hendrerit',
+  'Aliquam sagittis, velit finibus consequat hendrerit, eros',
+  'Donec ipsum nisi, fermentum ac velit eget, lacinia aliquet eros',
+  'oin vestibulum luctus nunc vel consectetu',
+  'porttitor',
+  'sque fermentum magna non ex rutru',
+  'accumsan elit ac',
+  'elementum erat',
+  'nullam ultrices ornare lobortis',
+  'proin quis erat at orci tempor lacinia',
+  'Quisque semper odio arcu',
+  'suspendisse iaculis gravida venenatis',
+  'nunc lacinia orci sapien',
+  'posuere',
+  'dignissim vitae magna',
+  'vitae nibh',
+  'maecenas et imperdiet lectus',
+  'et pulvinar lacus vehicula nec',
+  'maecenas placerat in ex eget maximus',
+  'donec rutrum elit eget erat gravida, id accumsan nisl commodo',
+  'mauris vitae consectetur erat, non faucibus velit',
+  'quisque risus justo, pretium elementum efficitur ut',
+  'vivamus eleifend, ante id iaculis consequat, sem lectus commodo'
+];
+
+const generateRandomMessagesFromRandomUsers = (numOfMessages: number) => {
+  const messages = [];
+
+  for (var i = 0; i < numOfMessages; i++) {
+    const userId = 1 + Math.floor(Math.random() * 20);
+    const rows = 1 + Math.floor(Math.random() * 3);
+    for (var j = 0; j < rows; j++) {
+      messages.push({
+        id: nextMessageId++,
+        user: users[userId],
+        content: randomMessages[Math.floor(Math.random() * randomMessages.length)],
+        time: 'Today at 5:17 PM'
+      } as IMessage);
+    }
+  }
+
+  return messages;
+};
+
 const users: { [key: string]: IUser; } = {
   1: {
     id: 1,
@@ -181,600 +228,555 @@ const users: { [key: string]: IUser; } = {
   }
 }
 
-const randomMessages = [
-  'Quisque eget sapien scelerisque, sagittis neque sed, rhoncus lacus.',
-  'nam elementum',
-  'cursus viverra hendrerit',
-  'Aliquam sagittis, velit finibus consequat hendrerit, eros',
-  'Donec ipsum nisi, fermentum ac velit eget, lacinia aliquet eros',
-  'oin vestibulum luctus nunc vel consectetu',
-  'porttitor',
-  'sque fermentum magna non ex rutru',
-  'accumsan elit ac',
-  'elementum erat',
-  'nullam ultrices ornare lobortis',
-  'proin quis erat at orci tempor lacinia',
-  'Quisque semper odio arcu',
-  'suspendisse iaculis gravida venenatis',
-  'nunc lacinia orci sapien',
-  'posuere',
-  'dignissim vitae magna',
-  'vitae nibh',
-  'maecenas et imperdiet lectus',
-  'et pulvinar lacus vehicula nec',
-  'maecenas placerat in ex eget maximus',
-  'donec rutrum elit eget erat gravida, id accumsan nisl commodo',
-  'mauris vitae consectetur erat, non faucibus velit',
-  'quisque risus justo, pretium elementum efficitur ut',
-  'vivamus eleifend, ante id iaculis consequat, sem lectus commodo'
-];
-
-const generateRandomMessagesFromRandomUsers = (numOfMessages: number) => {
-  const messages = [];
-
-  for (var i = 0; i < numOfMessages; i++) {
-    const userId = 1 + Math.floor(Math.random() * 20);
-    const rows = 1 + Math.floor(Math.random() * 3);
-    for (var j = 0; j < rows; j++) {
-      messages.push({
-        id: nextMessageId++,
-        user: users[userId],
-        content: randomMessages[Math.floor(Math.random() * randomMessages.length)],
-        time: 'Today at 5:17 PM'
-      } as IMessage);
-    }
+const guilds: IGuild[] = [
+  {
+    id: 1111,
+    name: 'Reactiflux',
+    initials: 'R',
+    icon: 'https://api.adorable.io/avatars/285/Reactiflux.png',
+    welcomeChannelId: 111124,
+    categories: [
+      {
+        id: 11112,
+        name: 'general',
+        channels: [
+          {
+            id: 111123,
+            name: 'welcome',
+            messages: [...generateRandomMessagesFromRandomUsers(13)]
+          },
+          {
+            id: 111124,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(50)]
+          },
+          {
+            id: 111125,
+            name: 'need-help',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 111126,
+            name: 'introductions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 111127,
+            name: 'resources',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 111128,
+            name: 'news-and-links',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 11113,
+        name: 'community',
+        channels: [
+          {
+            id: 111133,
+            name: 'q-and-a',
+            messages: [...generateRandomMessagesFromRandomUsers(3)]
+          },
+          {
+            id: 111134,
+            name: 'conferences',
+            messages: [...generateRandomMessagesFromRandomUsers(50)]
+          },
+          {
+            id: 111135,
+            name: 'jobs-advice',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 111136,
+            name: 'code-review',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'Admin',
+        color: 'rgb(231, 76, 60)',
+        isSeparated: true
+      },
+      12: {
+        id: 12,
+        name: 'Moderator',
+        color: 'rgb(230, 126, 34)',
+        isSeparated: true
+      },
+      13: {
+        id: 13,
+        name: 'MVP',
+        color: 'rgb(155, 89, 182)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [11, 12] },
+      { userId: 2, roles: [] },
+      { userId: 3, roles: [12] },
+      { userId: 4, roles: [] },
+      { userId: 5, roles: [] },
+      { userId: 6, roles: [] },
+      { userId: 7, roles: [] },
+      { userId: 8, roles: [] },
+      { userId: 9, roles: [] },
+      { userId: 10, roles: [] },
+      { userId: 11, roles: [] },
+      { userId: 12, roles: [] },
+      { userId: 13, roles: [11] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 16, roles: [13] },
+      { userId: 17, roles: [13] },
+      { userId: 18, roles: [] },
+      { userId: 19, roles: [] },
+      { userId: 20, roles: [] }
+    ]
+  },
+  {
+    id: 2222,
+    name: 'MonoGame Discord',
+    initials: 'MD',
+    icon: 'https://api.adorable.io/avatars/285/MD.png',
+    welcomeChannelId: 222224,
+    categories: [
+      { 
+        id: 22222,
+        name: 'announcements',
+        channels: [
+          {
+            id: 222223,
+            name: 'rules',
+            messages: [...generateRandomMessagesFromRandomUsers(4)]
+          },
+          {
+            id: 222224,
+            name: 'announcements',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 222225,
+            name: 'showcase',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 22223,
+        name: 'general',
+        channels: [
+          {
+            id: 222233,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 222234,
+            name: 'c-sharp',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 222235,
+            name: 'libraries',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 222236,
+            name: 'questions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 222237,
+            name: 'non-programming',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'MonoGame Maintainer',
+        color: 'rgb(46, 204, 113)',
+        isSeparated: true
+      },
+      12: {
+        id: 21,
+        name: 'Server Admin',
+        color: 'rgb(233, 30, 99)',
+        isSeparated: true
+      },
+      13: {
+        id: 13,
+        name: 'Server Moderator',
+        color: 'rgb(52, 152, 219)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [] },
+      { userId: 3, roles: [] },
+      { userId: 4, roles: [12] },
+      { userId: 5, roles: [12] },
+      { userId: 6, roles: [13] },
+      { userId: 7, roles: [] },
+      { userId: 8, roles: [] },
+      { userId: 9, roles: [] },
+      { userId: 10, roles: [11] },
+      { userId: 11, roles: [] },
+      { userId: 12, roles: [] },
+      { userId: 13, roles: [] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 18, roles: [11] }
+    ]
+  },
+  {
+    id: 3333,
+    name: 'Terraria',
+    initials: 'T',
+    icon: 'https://api.adorable.io/avatars/285/T.png',
+    welcomeChannelId: 333323,
+    categories: [
+      {
+        id: 33332,
+        name: 'announcements',
+        channels: [
+          {
+            id: 333323,
+            name: 'rules',
+            messages: [...generateRandomMessagesFromRandomUsers(5)]
+          },
+          {
+            id: 333324,
+            name: 'announcements',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 33333,
+        name: 'general',
+        channels: [
+          {
+            id: 333333,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 333334,
+            name: 'questions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 333335,
+            name: 'offtopic',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'Admin',
+        color: 'rgb(253, 81, 81)',
+        isSeparated: true
+      },
+      12: {
+        id: 21,
+        name: 'Moderator',
+        color: 'rgb(117, 238, 238)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [] },
+      { userId: 3, roles: [] },
+      { userId: 4, roles: [] },
+      { userId: 5, roles: [11] },
+      { userId: 6, roles: [] },
+      { userId: 7, roles: [] },
+      { userId: 8, roles: [12] },
+      { userId: 9, roles: [11] },
+      { userId: 10, roles: [] },
+      { userId: 11, roles: [] },
+      { userId: 12, roles: [] },
+      { userId: 13, roles: [11] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 16, roles: [] },
+      { userId: 17, roles: [] },
+      { userId: 18, roles: [] },
+      { userId: 19, roles: [] },
+      { userId: 20, roles: [] }
+    ]
+  },
+  {
+    id: 4444,
+    name: 'Rocket League',
+    initials: 'RL',
+    icon: 'https://api.adorable.io/avatars/285/RL.png',
+    welcomeChannelId: 444423,
+    categories: [
+      {
+        id: 44442,
+        name: 'announcements',
+        channels: [
+          {
+            id: 444423,
+            name: 'rules',
+            messages: [...generateRandomMessagesFromRandomUsers(5)]
+          },
+          {
+            id: 444424,
+            name: 'announcements',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 44443,
+        name: 'general',
+        channels: [
+          {
+            id: 444433,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 444434,
+            name: 'questions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 444435,
+            name: 'offtopic',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'Admin',
+        color: 'rgb(253, 81, 81)',
+        isSeparated: true
+      },
+      12: {
+        id: 21,
+        name: 'Moderator',
+        color: 'rgb(117, 238, 238)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [] },
+      { userId: 3, roles: [12] },
+      { userId: 4, roles: [12] },
+      { userId: 5, roles: [11] },
+      { userId: 6, roles: [] },
+      { userId: 7, roles: [] },
+      { userId: 8, roles: [] },
+      { userId: 9, roles: [] },
+      { userId: 10, roles: [] },
+      { userId: 11, roles: [] },
+      { userId: 12, roles: [] },
+      { userId: 13, roles: [] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 16, roles: [] },
+      { userId: 17, roles: [] },
+      { userId: 18, roles: [] }
+    ]
+  },
+  {
+    id: 5555,
+    name: 'Apex Legends',
+    initials: 'AL',
+    icon: 'https://api.adorable.io/avatars/285/AL.png',
+    welcomeChannelId: 555523,
+    categories: [
+      {
+        id: 55552,
+        name: 'announcements',
+        channels: [
+          {
+            id: 555523,
+            name: 'rules',
+            messages: [...generateRandomMessagesFromRandomUsers(57)]
+          },
+          {
+            id: 555524,
+            name: 'announcements',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 55553,
+        name: 'general',
+        channels: [
+          {
+            id: 555533,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 555534,
+            name: 'questions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 555535,
+            name: 'offtopic',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'Admin',
+        color: 'rgb(253, 81, 81)',
+        isSeparated: true
+      },
+      12: {
+        id: 21,
+        name: 'Moderator',
+        color: 'rgb(117, 238, 238)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [] },
+      { userId: 3, roles: [] },
+      { userId: 4, roles: [] },
+      { userId: 5, roles: [] },
+      { userId: 6, roles: [] },
+      { userId: 7, roles: [11] },
+      { userId: 8, roles: [] },
+      { userId: 9, roles: [] },
+      { userId: 10, roles: [12] },
+      { userId: 11, roles: [12] },
+      { userId: 12, roles: [12] },
+      { userId: 13, roles: [] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 16, roles: [] },
+      { userId: 17, roles: [11] },
+      { userId: 18, roles: [] },
+      { userId: 19, roles: [11] },
+      { userId: 20, roles: [] }
+    ]
+  },
+  {
+    id: 6666,
+    name: 'Cats Nation',
+    initials: 'CN',
+    icon: 'https://api.adorable.io/avatars/285/CN.png',
+    welcomeChannelId: 666623,
+    categories: [
+      {
+        id: 66662,
+        name: 'announcements',
+        channels: [
+          {
+            id: 666623,
+            name: 'rules',
+            messages: [...generateRandomMessagesFromRandomUsers(51)]
+          },
+          {
+            id: 666624,
+            name: 'announcements',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      },
+      {
+        id: 66663,
+        name: 'general',
+        channels: [
+          {
+            id: 666633,
+            name: 'general',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 666634,
+            name: 'questions',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          },
+          {
+            id: 666635,
+            name: 'offtopic',
+            messages: [...generateRandomMessagesFromRandomUsers(30)]
+          }
+        ]
+      }
+    ],
+    roles: {
+      11: {
+        id: 11,
+        name: 'Admin',
+        color: 'rgb(253, 81, 81)',
+        isSeparated: true
+      },
+      12: {
+        id: 12,
+        name: 'Moderator',
+        color: 'rgb(117, 238, 238)',
+        isSeparated: true
+      },
+      13: {
+        id: 13,
+        name: 'Fox',
+        color: 'rgb(230, 126, 34)',
+        isSeparated: true
+      }
+    },
+    members: [
+      { userId: 1, roles: [11] },
+      { userId: 3, roles: [] },
+      { userId: 4, roles: [] },
+      { userId: 5, roles: [11] },
+      { userId: 6, roles: [] },
+      { userId: 7, roles: [12] },
+      { userId: 8, roles: [] },
+      { userId: 9, roles: [] },
+      { userId: 10, roles: [] },
+      { userId: 11, roles: [12] },
+      { userId: 12, roles: [12] },
+      { userId: 13, roles: [12] },
+      { userId: 14, roles: [] },
+      { userId: 15, roles: [] },
+      { userId: 16, roles: [] },
+      { userId: 17, roles: [] },
+      { userId: 18, roles: [] },
+      { userId: 19, roles: [13] },
+      { userId: 20, roles: [] }
+    ]
   }
-
-  return messages;
-};
+]
 
 const data: {
   friendsOnlineCount: number,
   guilds: IGuild[];
   users: { [key: string]: IUser; };
 } = {
-  friendsOnlineCount: 2,
-  guilds: [
-    {
-      id: 1111,
-      name: 'Reactiflux',
-      initials: 'R',
-      icon: 'https://api.adorable.io/avatars/285/Reactiflux.png',
-      welcomeChannelId: 111124,
-      categories: [
-        {
-          id: 11112,
-          name: 'general',
-          channels: [
-            {
-              id: 111123,
-              name: 'welcome',
-              messages: [...generateRandomMessagesFromRandomUsers(13)]
-            },
-            {
-              id: 111124,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(50)]
-            },
-            {
-              id: 111125,
-              name: 'need-help',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 111126,
-              name: 'introductions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 111127,
-              name: 'resources',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 111128,
-              name: 'news-and-links',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 11113,
-          name: 'community',
-          channels: [
-            {
-              id: 111133,
-              name: 'q-and-a',
-              messages: [...generateRandomMessagesFromRandomUsers(3)]
-            },
-            {
-              id: 111134,
-              name: 'conferences',
-              messages: [...generateRandomMessagesFromRandomUsers(50)]
-            },
-            {
-              id: 111135,
-              name: 'jobs-advice',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 111136,
-              name: 'code-review',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'Admin',
-          color: 'rgb(231, 76, 60)',
-          isSeparated: true
-        },
-        12: {
-          id: 12,
-          name: 'Moderator',
-          color: 'rgb(230, 126, 34)',
-          isSeparated: true
-        },
-        13: {
-          id: 13,
-          name: 'MVP',
-          color: 'rgb(155, 89, 182)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [11, 12] },
-        { userId: 2, roles: [] },
-        { userId: 3, roles: [12] },
-        { userId: 4, roles: [] },
-        { userId: 5, roles: [] },
-        { userId: 6, roles: [] },
-        { userId: 7, roles: [] },
-        { userId: 8, roles: [] },
-        { userId: 9, roles: [] },
-        { userId: 10, roles: [] },
-        { userId: 11, roles: [] },
-        { userId: 12, roles: [] },
-        { userId: 13, roles: [11] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 16, roles: [13] },
-        { userId: 17, roles: [13] },
-        { userId: 18, roles: [] },
-        { userId: 19, roles: [] },
-        { userId: 20, roles: [] }
-      ]
-    },
-    {
-      id: 2222,
-      name: 'MonoGame Discord',
-      initials: 'MD',
-      icon: 'https://api.adorable.io/avatars/285/MD.png',
-      welcomeChannelId: 222224,
-      categories: [
-        { 
-          id: 22222,
-          name: 'announcements',
-          channels: [
-            {
-              id: 222223,
-              name: 'rules',
-              messages: [...generateRandomMessagesFromRandomUsers(4)]
-            },
-            {
-              id: 222224,
-              name: 'announcements',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 222225,
-              name: 'showcase',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 22223,
-          name: 'general',
-          channels: [
-            {
-              id: 222233,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 222234,
-              name: 'c-sharp',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 222235,
-              name: 'libraries',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 222236,
-              name: 'questions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 222237,
-              name: 'non-programming',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'MonoGame Maintainer',
-          color: 'rgb(46, 204, 113)',
-          isSeparated: true
-        },
-        12: {
-          id: 21,
-          name: 'Server Admin',
-          color: 'rgb(233, 30, 99)',
-          isSeparated: true
-        },
-        13: {
-          id: 13,
-          name: 'Server Moderator',
-          color: 'rgb(52, 152, 219)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [] },
-        { userId: 3, roles: [] },
-        { userId: 4, roles: [12] },
-        { userId: 5, roles: [12] },
-        { userId: 6, roles: [13] },
-        { userId: 7, roles: [] },
-        { userId: 8, roles: [] },
-        { userId: 9, roles: [] },
-        { userId: 10, roles: [11] },
-        { userId: 11, roles: [] },
-        { userId: 12, roles: [] },
-        { userId: 13, roles: [] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 18, roles: [11] }
-      ]
-    },
-    {
-      id: 3333,
-      name: 'Terraria',
-      initials: 'T',
-      icon: 'https://api.adorable.io/avatars/285/T.png',
-      welcomeChannelId: 333323,
-      categories: [
-        {
-          id: 33332,
-          name: 'announcements',
-          channels: [
-            {
-              id: 333323,
-              name: 'rules',
-              messages: [...generateRandomMessagesFromRandomUsers(5)]
-            },
-            {
-              id: 333324,
-              name: 'announcements',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 33333,
-          name: 'general',
-          channels: [
-            {
-              id: 333333,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 333334,
-              name: 'questions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 333335,
-              name: 'offtopic',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'Admin',
-          color: 'rgb(253, 81, 81)',
-          isSeparated: true
-        },
-        12: {
-          id: 21,
-          name: 'Moderator',
-          color: 'rgb(117, 238, 238)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [] },
-        { userId: 3, roles: [] },
-        { userId: 4, roles: [] },
-        { userId: 5, roles: [11] },
-        { userId: 6, roles: [] },
-        { userId: 7, roles: [] },
-        { userId: 8, roles: [12] },
-        { userId: 9, roles: [11] },
-        { userId: 10, roles: [] },
-        { userId: 11, roles: [] },
-        { userId: 12, roles: [] },
-        { userId: 13, roles: [11] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 16, roles: [] },
-        { userId: 17, roles: [] },
-        { userId: 18, roles: [] },
-        { userId: 19, roles: [] },
-        { userId: 20, roles: [] }
-      ]
-    },
-    {
-      id: 4444,
-      name: 'Rocket League',
-      initials: 'RL',
-      icon: 'https://api.adorable.io/avatars/285/RL.png',
-      welcomeChannelId: 444423,
-      categories: [
-        {
-          id: 44442,
-          name: 'announcements',
-          channels: [
-            {
-              id: 444423,
-              name: 'rules',
-              messages: [...generateRandomMessagesFromRandomUsers(5)]
-            },
-            {
-              id: 444424,
-              name: 'announcements',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 44443,
-          name: 'general',
-          channels: [
-            {
-              id: 444433,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 444434,
-              name: 'questions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 444435,
-              name: 'offtopic',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'Admin',
-          color: 'rgb(253, 81, 81)',
-          isSeparated: true
-        },
-        12: {
-          id: 21,
-          name: 'Moderator',
-          color: 'rgb(117, 238, 238)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [] },
-        { userId: 3, roles: [12] },
-        { userId: 4, roles: [12] },
-        { userId: 5, roles: [11] },
-        { userId: 6, roles: [] },
-        { userId: 7, roles: [] },
-        { userId: 8, roles: [] },
-        { userId: 9, roles: [] },
-        { userId: 10, roles: [] },
-        { userId: 11, roles: [] },
-        { userId: 12, roles: [] },
-        { userId: 13, roles: [] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 16, roles: [] },
-        { userId: 17, roles: [] },
-        { userId: 18, roles: [] }
-      ]
-    },
-    {
-      id: 5555,
-      name: 'Apex Legends',
-      initials: 'AL',
-      icon: 'https://api.adorable.io/avatars/285/AL.png',
-      welcomeChannelId: 555523,
-      categories: [
-        {
-          id: 55552,
-          name: 'announcements',
-          channels: [
-            {
-              id: 555523,
-              name: 'rules',
-              messages: [...generateRandomMessagesFromRandomUsers(57)]
-            },
-            {
-              id: 555524,
-              name: 'announcements',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 55553,
-          name: 'general',
-          channels: [
-            {
-              id: 555533,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 555534,
-              name: 'questions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 555535,
-              name: 'offtopic',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'Admin',
-          color: 'rgb(253, 81, 81)',
-          isSeparated: true
-        },
-        12: {
-          id: 21,
-          name: 'Moderator',
-          color: 'rgb(117, 238, 238)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [] },
-        { userId: 3, roles: [] },
-        { userId: 4, roles: [] },
-        { userId: 5, roles: [] },
-        { userId: 6, roles: [] },
-        { userId: 7, roles: [11] },
-        { userId: 8, roles: [] },
-        { userId: 9, roles: [] },
-        { userId: 10, roles: [12] },
-        { userId: 11, roles: [12] },
-        { userId: 12, roles: [12] },
-        { userId: 13, roles: [] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 16, roles: [] },
-        { userId: 17, roles: [11] },
-        { userId: 18, roles: [] },
-        { userId: 19, roles: [11] },
-        { userId: 20, roles: [] }
-      ]
-    },
-    {
-      id: 6666,
-      name: 'Cats Nation',
-      initials: 'CN',
-      icon: 'https://api.adorable.io/avatars/285/CN.png',
-      welcomeChannelId: 666623,
-      categories: [
-        {
-          id: 66662,
-          name: 'announcements',
-          channels: [
-            {
-              id: 666623,
-              name: 'rules',
-              messages: [...generateRandomMessagesFromRandomUsers(51)]
-            },
-            {
-              id: 666624,
-              name: 'announcements',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        },
-        {
-          id: 66663,
-          name: 'general',
-          channels: [
-            {
-              id: 666633,
-              name: 'general',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 666634,
-              name: 'questions',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            },
-            {
-              id: 666635,
-              name: 'offtopic',
-              messages: [...generateRandomMessagesFromRandomUsers(30)]
-            }
-          ]
-        }
-      ],
-      roles: {
-        11: {
-          id: 11,
-          name: 'Admin',
-          color: 'rgb(253, 81, 81)',
-          isSeparated: true
-        },
-        12: {
-          id: 12,
-          name: 'Moderator',
-          color: 'rgb(117, 238, 238)',
-          isSeparated: true
-        },
-        13: {
-          id: 13,
-          name: 'Fox',
-          color: 'rgb(230, 126, 34)',
-          isSeparated: true
-        }
-      },
-      members: [
-        { userId: 1, roles: [11] },
-        { userId: 3, roles: [] },
-        { userId: 4, roles: [] },
-        { userId: 5, roles: [11] },
-        { userId: 6, roles: [] },
-        { userId: 7, roles: [12] },
-        { userId: 8, roles: [] },
-        { userId: 9, roles: [] },
-        { userId: 10, roles: [] },
-        { userId: 11, roles: [12] },
-        { userId: 12, roles: [12] },
-        { userId: 13, roles: [12] },
-        { userId: 14, roles: [] },
-        { userId: 15, roles: [] },
-        { userId: 16, roles: [] },
-        { userId: 17, roles: [] },
-        { userId: 18, roles: [] },
-        { userId: 19, roles: [13] },
-        { userId: 20, roles: [] }
-      ]
-    }
-  ],
+  friendsOnlineCount: 0,
+  guilds: [],
   users,
 }
 

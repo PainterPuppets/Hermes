@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from message.models import Message, Signal
+from message.models import Message, Signal, Channel
+from message.services import ChannelService
 from user.serializers import UserSerializer
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -19,13 +20,18 @@ class SignalSerializer(serializers.ModelSerializer):
     content = serializers.CharField(source='message.content')
     time = serializers.CharField(source='message.time')
     user = UserSerializer(source='message.user')
+    channel_id = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Signal
         fields = (
             'id',
+            'channel_id',
             'content',
             'time',
-            'is_recieved',
+            'is_received',
             'user',
         )
+
+    def get_channel_id(self, obj):
+        return ChannelService.get_channel_id(obj.channel)

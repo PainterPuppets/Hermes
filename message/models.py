@@ -41,7 +41,7 @@ class Message(models.Model):
 class Signal(models.Model):
     receiver = models.ForeignKey(User, on_delete=None)
     channel = models.ForeignKey(Channel, on_delete=None)
-    is_recieved = models.BooleanField(default=False)
+    is_received = models.BooleanField(default=False)
     message = models.ForeignKey(Message, on_delete=None)
 
 
