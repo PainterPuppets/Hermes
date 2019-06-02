@@ -69,7 +69,7 @@ class MessagesWrapper extends Component<any, any> {
       <StyledMessagesWrapper>
         <ScrollableArea>
           <WelcomeChannelMessage channelName={this.props.channelName} />
-          {ChatStore.groupMessage.map((group) => (
+          {ChatStore.groupMessage.length !== 0 && ChatStore.groupMessage.map((group) => (
             <MemberMessageGroup
               key={group.messages[0].id}
               guild={this.props.guild}
