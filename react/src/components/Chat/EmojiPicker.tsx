@@ -16,7 +16,11 @@ class CommentEmojiPicker extends React.Component<any, any> {
     return (
       <div className={className}>
         <Picker 
-          style={{ opacity: visible ? 1 : 0, transition: 'all .2s' }} 
+          style={{ 
+            visibility: visible ? 'visible' : 'hidden',
+            opacity: visible ? 1 : 0,
+            transition: 'all .2s'
+          }} 
           {...this.props}
         />
       </div>

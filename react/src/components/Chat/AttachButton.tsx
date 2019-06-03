@@ -4,7 +4,7 @@ import colors from '../../utils/colors';
 
 import AttachButtonPlus from '../../icons/AttachButtonPlus';
 
-const StyledAttachButton = styled.button`
+const StyledAttachButton = styled.a`
   background: 0;
   padding: 0;
   margin: 0;
@@ -37,7 +37,7 @@ const StyledAttachButton = styled.button`
 `;
 
 export default () => (
-  <StyledAttachButton>
+  <StyledAttachButton onClick={() => {}}>
     <div>
       <AttachButtonPlus />
     </div>
