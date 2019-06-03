@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react';
+import { Badge } from 'antd';
+
 import ChatStore from 'store/ChatStore';
 import UIStore from 'store/UIStore';
 import UserAvatar from '../../components/UserAvatar';
@@ -77,15 +79,13 @@ const StyledChannel = styled.div<{ smallHeight?: boolean }>`
     opacity: 0.6;
   }
 
-  span {
-    color: ${colors.channelName};
-  }
-
   .avatar-wrapper {
-    margin-right: 12px;
+    margin-right: 0px;
   }
 
   .username {
+    color: ${colors.channelName};
+    margin-left: 12px;
     flex: 1 1 auto;
   }
 
@@ -103,7 +103,21 @@ const StyledChannel = styled.div<{ smallHeight?: boolean }>`
   }
 `;
 
+const StyledBadge = styled(Badge)`
+  color: #fff !important;
+  .ant-badge-count {
+    box-shadow: none;
+    text-align: center;
+    background: #f04747;
+  }
+`
+
 const PrivateChannels = observer(({ onChannelClick }: any) => {
+
+  const handleChannelClick = (id: any) => {
+    onChannelClick(null, id);
+    ChatStore.readChannelMessage(id);
+  }
 
   return (
   <StyledPrivateChannels>
@@ -129,19 +143,20 @@ const PrivateChannels = observer(({ onChannelClick }: any) => {
 
     <div className="header">Direct Messages</div>
 
-    {ChatStore.directChannels.map(directMessage => {
-      const user = directMessage.target;
+    {ChatStore.directChannels.map(directChannel => {
+      const user = directChannel.target;
 
       return (
         <StyledChannel
-          key={directMessage.id}
-          className={directMessage.id === UIStore.selectedPrivateChannelId ? 'active' : ''}
-          onClick={() => onChannelClick(null, directMessage.id)}
+          key={directChannel.id}
+          className={directChannel.id === UIStore.selectedPrivateChannelId ? 'active' : ''}
+          onClick={() => handleChannelClick(directChannel.id)}
           smallHeight
         >
-          <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar_url} />
+          <UserAvatar className="avatar-wrapper" avatarUrl={user.avatar_url} status={false}/>
           <span className="username">{user.username}</span>
-          <button className="close" />
+          {/* <button className="close" /> */}
+          <StyledBadge count={directChannel.unreadCount || 0} overflowCount={99}/>
         </StyledChannel>
       );
     })}

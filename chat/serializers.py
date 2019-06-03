@@ -14,6 +14,7 @@ class DirectSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField(read_only=True)
     target = serializers.SerializerMethodField(read_only=True)
     messages = serializers.SerializerMethodField(read_only=True)
+    last_activity_at = serializers.CharField(source='channel.last_activity_at')
 
     class Meta:
         model = Direct
@@ -21,6 +22,7 @@ class DirectSerializer(serializers.ModelSerializer):
             'id',
             'target',
             'messages',
+            'last_activity_at',
         )
     
     def get_id(self, obj):

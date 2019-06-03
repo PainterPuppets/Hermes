@@ -7,29 +7,18 @@ import { IDirectChannel, IUser, IMessage, IMessageGroup } from '../constant/Inte
 
 class ChatStore {
   @observable initialize = true;
-  @observable directChannels: IDirectChannel[] = [];
+  @observable _directChannels: IDirectChannel[] = [];
 
-  @action init = () => {
-    return this.getdirectChannels();
+  @computed get directChannels () {
+    // this._directChannels.map(channel => channel.unreadCount = channel.messages.filter(message => message.is_received === false).length);
+    // console.log(this._directChannels);
+    return this._directChannels;
   }
 
-  @action getDirectId = (target: IUser) => {
-    return `direct#${AuthStore.user.id}-${target.id}`
-  }
-  
-  @action getDirectCannel = (id: string) => {
-    const regex = /direct#(\w*)-(\w*)/
-    const result = regex.exec(id);
-    if (!result) {
-      return null;
-    }
-  
-    const alias = `direct#${result[2]}-${result[1]}`
-    const index = this.directChannels.findIndex(channel => channel.id === id || channel.id === alias);
-    if (index === -1) {
-      return null;
-    }
-    return this.directChannels[index];
+  @computed get unReadCount () {
+    let count = 0;
+    this._directChannels.map(channel => count += (channel.unreadCount || 0));
+    return count
   }
 
   @computed get groupMessage() {
@@ -70,15 +59,39 @@ class ChatStore {
     return groups
   }
 
+  @action init = () => {
+    return this.getdirectChannels();
+  }
+
+  @action getDirectId = (target: IUser) => {
+    return `direct#${AuthStore.user.id}-${target.id}`
+  }
+  
+  @action getDirectCannel = (id: string) => {
+    const regex = /direct#(\w*)-(\w*)/
+    const result = regex.exec(id);
+    if (!result) {
+      return null;
+    }
+  
+    const alias = `direct#${result[2]}-${result[1]}`
+    const index = this._directChannels.findIndex(channel => channel.id === id || channel.id === alias);
+    if (index === -1) {
+      return null;
+    }
+    return this._directChannels[index];
+  }
+
+
   @action getOrCreateDirectCannelFromId = (id: string, user?: IUser) => {
     const channel = this.getDirectCannel(id);
     if (channel) {
       return channel;
     }
     const newChannel: IDirectChannel = { id, target: (user || ({} as IUser)), messages: [] } as IDirectChannel
-    this.directChannels.unshift(newChannel);
+    this._directChannels.unshift(newChannel);
     this.syncDirect(id);
-    return this.directChannels[0];
+    return this._directChannels[0];
   }
 
   @action getOrCreateDirectCannel = (target: IUser) => {
@@ -88,13 +101,14 @@ class ChatStore {
       return channel;
     }
     const newChannel: IDirectChannel = { id, target, messages: [] } as IDirectChannel
-    this.directChannels.unshift(newChannel);
+    this._directChannels.unshift(newChannel);
     this.syncDirect(id);
-    return this.directChannels[0];
+    return this._directChannels[0];
   }
 
   @action receiveNewMessage = (msg: any) => {
     let channel = this.getOrCreateDirectCannelFromId(msg.channel_id, msg.user);
+    channel.unreadCount = (channel.unreadCount || 0) + 1;
     channel.messages.push(msg);
   }
 
@@ -126,16 +140,32 @@ class ChatStore {
 
   @action getdirectChannels = () => {
     return BaseProvider.get('/api/chat/directs/').then((res: any) => {
-      this.directChannels = res.data;
+      res.data.map((channel: any) => channel.unreadCount = channel.messages.filter((message: any) => message.is_received === false).length);
+      this._directChannels = res.data;
     }).finally(() => {
       this.initialize = false;
+    });
+  }
+
+  @action readChannelMessage = (id: string) => {
+    let channel = this.getDirectCannel(id);
+    if (!channel || !channel.unreadCount) {
+      return Promise.resolve();
+    }
+    let fullback = channel.unreadCount;
+    channel.unreadCount = 0;
+    return BaseProvider.post(`/api/chat/direct_read/${encodeURIComponent(id)}/`).catch(err => {
+      if (!channel) {
+        return;
+      }
+      channel.unreadCount = fullback;
     });
   }
 
 
   @action reset() {
     this.initialize = true;
-    this.directChannels = [];
+    this._directChannels = [];
   }
 }
 

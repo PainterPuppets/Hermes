@@ -51,3 +51,26 @@ class ChatViewSet(ViewSet):
         channel = ChannelService.get_channel_from_id(id)
         direct = channel.direct_set.get(user=request.user)
         return Response(DirectSerializer(direct, context={'request': request}).data)
+
+
+    @list_route(methods=['Delete'], permission_classes=[IsAuthenticated], url_path='direct/(?P<id>[^/.]+)')
+    def direct_delete(self, request, id=None):
+        if not ChannelService.check_channel_exist(id):
+            return Response({u'detail': u'channel不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+        channel = ChannelService.get_channel_from_id(id)
+        direct = channel.direct_set.get(user=request.user)
+        direct.is_close = True
+        direct.save()
+
+        return Response(DirectSerializer(direct, context={'request': request}).data)
+    
+    @list_route(methods=['POST'], permission_classes=[IsAuthenticated], url_path='direct_read/(?P<id>[^/.]+)')
+    def direct_read(self, request, id=None):
+        if not ChannelService.check_channel_exist(id):
+            return Response({u'detail': u'channel不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+        channel = ChannelService.get_channel_from_id(id)
+        channel.signal_set.filter(receiver=request.user).update(is_received=True)
+
+        return Response(status=status.HTTP_200_OK)

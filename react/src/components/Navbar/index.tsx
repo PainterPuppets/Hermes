@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Tooltip } from 'antd';
+import ChatStore from 'store/ChatStore';
 import colors from '../../utils/colors';
 import GuildIcon from './GuildIcon';
 import OnlineFriendsCounter from './OnlineFriendsCounter';
@@ -35,7 +36,7 @@ const Navbar = ({ onHomeClick, onGuildClick, selectedGuildId }: any) => (
     <ScrollableArea invisible>
       <div className="content">
         <Tooltip placement="right" title={"Home"}>
-          <GuildIcon isHome={true} selected={!selectedGuildId} onClick={onHomeClick} />
+          <GuildIcon isHome={true} selected={!selectedGuildId} onClick={onHomeClick} unReadCount={ChatStore.unReadCount}/>
         </Tooltip>
         <OnlineFriendsCounter online={data.friendsOnlineCount} />
 

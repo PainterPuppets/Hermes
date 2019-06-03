@@ -29,6 +29,6 @@ def fanout_message(sender, instance, created, **kwargs):
         Signal.objects.create(
             receiver=user,
             channel=channel,
-            is_received=(user != instance.user),
+            is_received=(user == instance.user),
             message=instance
         )

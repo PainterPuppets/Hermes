@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Badge } from 'antd';
 import colors from '../../utils/colors';
 import DiscordIcon from '../../icons/Discord';
 
@@ -60,6 +61,16 @@ const StyledGuildIcon = styled.a<{ selected: boolean, icon: string }>`
   }
 `;
 
+const StyledBadge = styled(Badge)`
+  color: #fff !important;
+  .ant-badge-count {
+    box-shadow: none;
+    text-align: center;
+    background: #f04747;
+    transform: translate(0px, 45px);
+  }
+`
+
 const HomeIcon = styled(DiscordIcon)`
   color: ${colors.homeIcon};
   width: 100%;
@@ -67,7 +78,7 @@ const HomeIcon = styled(DiscordIcon)`
   padding: 5px;
 `;
 
-const GuildIcon = ({ name, icon, selected, isHome, isAdd, onClick, ...props }: any) => {
+const GuildIcon = ({ name, icon, selected, isHome, isAdd, onClick, unReadCount,  ...props }: any) => {
   let content = name;
   if (isHome) {
     content = <HomeIcon />;
@@ -77,15 +88,17 @@ const GuildIcon = ({ name, icon, selected, isHome, isAdd, onClick, ...props }: a
   }
 
   return (
-    <StyledGuildIcon
-      selected={selected}
-      icon={icon}
-      onClick={onClick}
-      className={isAdd ? 'add' : ''}
-      {...props}
-    >
-      {!icon ? content : ''}
-    </StyledGuildIcon>
+    <StyledBadge count={unReadCount || 0} overflowCount={99}>
+      <StyledGuildIcon
+        selected={selected}
+        icon={icon}
+        onClick={onClick}
+        className={isAdd ? 'add' : ''}
+        {...props}
+      >
+        {!icon ? content : ''}
+      </StyledGuildIcon>
+    </StyledBadge>
   );
 };
 

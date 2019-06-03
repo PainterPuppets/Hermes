@@ -82,7 +82,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated])
     def upload_avatar(self, request):
-        print ('upload_avatar')
         avatar_serializer = AvatarSerializer(data=request.data, context={'user': request.user})
         avatar_serializer.is_valid(raise_exception=True)
         avatar_serializer.save(user=request.user)

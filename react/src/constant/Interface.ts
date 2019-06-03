@@ -15,6 +15,8 @@ export interface IDirectChannel {
     id: string;
     target: IUser;
     messages: IMessage[];
+    unreadCount?: number; 
+    last_activity_at?: string;
 }
 
 export interface IMessageGroup {
@@ -27,6 +29,7 @@ export interface IMessage {
     user: IUser;
     content: string;
     time: string;
+    is_received?: boolean;
 }
 
 export interface IChannel {

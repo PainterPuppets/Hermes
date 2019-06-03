@@ -448,6 +448,9 @@ module.exports = function () {
                       'btn-danger-color': colors.text,
                       'btn-danger-bg': colors.error,
                       'btn-danger-border': colors.error,
+                      'badge-text-color': colors.headerText,
+                      'badge-height': '16px',
+                      'badge-font-weight': '600'
                     },
                     javascriptEnabled: true
                   } // compiles Less to CSS
