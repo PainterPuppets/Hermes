@@ -108,7 +108,10 @@ class ChatStore {
 
   @action receiveNewMessage = (msg: any) => {
     let channel = this.getOrCreateDirectCannelFromId(msg.channel_id, msg.user);
-    channel.unreadCount = (channel.unreadCount || 0) + 1;
+    if (UIStore.currentChannelId !== channel.id) {
+      channel.unreadCount = (channel.unreadCount || 0) + 1;
+      this.readChannelMessage(channel.id);
+    }
     channel.messages.push(msg);
   }
 
