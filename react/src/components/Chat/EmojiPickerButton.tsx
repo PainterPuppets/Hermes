@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import emojiSprite from '../../icons/emojiSprite.png';
+import EmojiPicker from './EmojiPicker';
 
 const EMOJIS_COUNT = 50;
 const EMOJIS_COLUMNS = 11;
 const ITEM_SIZE = 22;
 
-const StyledEmojiPickerButton = styled.button`
+const StyledEmojiPickerButton = styled.span`
   background: 0;
   padding: 0;
   margin: 0;
@@ -40,21 +41,44 @@ const StyledEmojiPickerButton = styled.button`
   }
 `;
 
-const EmojiPickerButton = () => {
+const StyledEmojiPicker = styled(EmojiPicker)`
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0px;
+`;
+
+const EmojiPickerButton = ({ onEmojiSelect }: any) => {
   const [index, setIndex] = useState(0);
+  const [emojipicker, setEmojipicker] = useState(false);
 
   const pickRandomIndex = () => {
     setIndex(Math.floor(Math.random() * EMOJIS_COUNT));
   };
+
+  const handleEmojiSelect = (emoji: any) => {
+    setEmojipicker(false)
+    onEmojiSelect(emoji);
+  }
 
   const x = (index % EMOJIS_COLUMNS) * ITEM_SIZE;
   const y = Math.floor(index / EMOJIS_COLUMNS) * ITEM_SIZE;
   const backgroundPosition = `-${x}px -${y}px`;
 
   return (
-    <StyledEmojiPickerButton onMouseEnter={pickRandomIndex}>
-      <div className="sprite" style={{ backgroundPosition }} />
-    </StyledEmojiPickerButton>
+    <React.Fragment>
+      <StyledEmojiPickerButton onMouseEnter={pickRandomIndex} onClick={() => setEmojipicker(true)}>
+        <div className="sprite" style={{ backgroundPosition }} />
+      </StyledEmojiPickerButton>
+  
+      <StyledEmojiPicker
+        className="hermes-emoji-picker"
+        title="Emoji"
+        set='emojione'
+        onClick={handleEmojiSelect}
+        onClickOutside={() => setEmojipicker(false)}
+        visible={emojipicker}
+      />
+    </React.Fragment>
   );
 };
 

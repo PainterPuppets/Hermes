@@ -7,6 +7,7 @@ import Gift from '../../icons/Gift';
 import GifPicker from '../../icons/GifPicker';
 
 const StyledButtonsBar = styled.div`
+  position: relative;
   display: flex;
   padding-right: 6px;
 `;
@@ -44,7 +45,7 @@ const ButtonContainer = styled.button<{ outerWidth: number, iconWidth: number, i
   }
 `;
 
-export default () => (
+export default ({ onEmojiSelect }: any) => (
   <StyledButtonsBar>
     {/* <ButtonContainer outerWidth={34} iconWidth={20} iconHeight={20}>
       <div>
@@ -58,6 +59,6 @@ export default () => (
       </div>
     </ButtonContainer> */}
 
-    <EmojiPickerButton />
+    <EmojiPickerButton onEmojiSelect={onEmojiSelect} />
   </StyledButtonsBar>
 );

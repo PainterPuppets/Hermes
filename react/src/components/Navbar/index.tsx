@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { Tooltip } from 'antd';
 import ChatStore from 'store/ChatStore';
@@ -31,7 +32,7 @@ const GuildSeparator = styled.div`
   background: ${colors.separator};
 `;
 
-const Navbar = ({ onHomeClick, onGuildClick, selectedGuildId }: any) => (
+const Navbar = observer(({ onHomeClick, onGuildClick, selectedGuildId }: any) => (
   <StyledNavbar>
     <ScrollableArea invisible>
       <div className="content">
@@ -61,6 +62,6 @@ const Navbar = ({ onHomeClick, onGuildClick, selectedGuildId }: any) => (
       </div>
     </ScrollableArea>
   </StyledNavbar>
-);
+));
 
 export default Navbar;

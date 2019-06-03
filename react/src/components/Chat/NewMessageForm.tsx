@@ -43,12 +43,15 @@ const StyledTextarea = styled.div`
     }
 
     &::-webkit-input-placeholder {
+      user-select: none;
       color: #949494;
     }
     &:-moz-placeholder {
+      user-select: none;
       color: #949494;
     }
     &:-ms-input-placeholder {
+      user-select: none;
       color: #949494;
     }
   }
@@ -56,6 +59,7 @@ const StyledTextarea = styled.div`
 
 @observer
 class NewMessageForm extends Component<any, any> {
+  textArea: any;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -72,7 +76,12 @@ class NewMessageForm extends Component<any, any> {
     this.setState({
       value: '',
     })
-  } 
+  }
+
+  handleEmojiSelect = (emoji: any) => {
+    this.setState({ value: this.state.value + emoji.native });
+    this.textArea.focus();
+  }
 
   render() {
     return (
@@ -83,6 +92,7 @@ class NewMessageForm extends Component<any, any> {
 
       <StyledTextarea>
         <TextArea
+          ref={(e) => this.textArea = e}
           value={this.state.value}
           onChange={e => this.setState({ value: e.target.value })}
           className="scrollbar-tiny"
@@ -92,7 +102,7 @@ class NewMessageForm extends Component<any, any> {
         />
       </StyledTextarea>
 
-      <NewMessageButtons />
+      <NewMessageButtons onEmojiSelect={this.handleEmojiSelect}/>
     </StyledNewMessageForm>
     )
   }

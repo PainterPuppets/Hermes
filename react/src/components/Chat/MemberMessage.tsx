@@ -109,7 +109,7 @@ export const Message = ({ guild, member, time, children, isHeading, onMemberClic
             <span className="username" onClick={e => onMemberClick(e, member)}>
               {member.username}
             </span>
-            <span className="time">{time}</span>
+            <span className="time">{new Date(time).toLocaleString()}</span>
           </div>
         </div>
       )}
