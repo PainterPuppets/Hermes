@@ -9,10 +9,7 @@ class ChannelService(object):
     
     @classmethod
     def get_or_create_private_channel(cls, user1, user2):
-        channel = Channel.objects.filter(
-            is_private=True,
-            members__in=[user1, user2]
-        )
+        channel = user1.joined_channel_set.filter(is_private=True, members__in=[user2.id])
         if channel.exists():
             return channel.first(), False
 
