@@ -34,22 +34,22 @@ class Channel(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=None)
-    channel = models.ForeignKey(Channel, on_delete=None)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    channel = models.ForeignKey(Channel, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
 
 
 class Signal(models.Model):
-    receiver = models.ForeignKey(User, on_delete=None)
-    channel = models.ForeignKey(Channel, on_delete=None)
+    receiver = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    channel = models.ForeignKey(Channel, null=True, on_delete=models.SET_NULL)
     is_received = models.BooleanField(default=False)
-    message = models.ForeignKey(Message, on_delete=None)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
 
 
 class Direct(models.Model):
-    user = models.ForeignKey(User, on_delete=None, related_name="direct_messages")
-    channel = models.ForeignKey(Channel, on_delete=None)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="direct_messages")
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     is_close = models.BooleanField(default=False)
 
     def active(self):

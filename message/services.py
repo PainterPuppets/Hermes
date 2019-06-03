@@ -9,10 +9,23 @@ class ChannelService(object):
     
     @classmethod
     def get_or_create_private_channel(cls, user1, user2):
-        channel = user1.joined_channel_set.filter(is_private=True, members__in=[user2.id])
-        if channel.exists():
-            return channel.first(), False
+        channel = cls.get_private_channel(user1, user2)
+        if channel is None:
+            channel = cls.create_private_channel(user1, user2)
+            return channel, True
 
+        return channel, False
+
+    @classmethod
+    def get_private_channel(cls, user1, user2):
+        channel = Channel.objects.filter(is_private=True, members__in=[user1]).filter(members__in=[user2])
+        if channel.exists():
+            return channel.first()
+        
+        return None
+
+    @classmethod
+    def create_private_channel(cls, user1, user2):
         channel = Channel.objects.create(is_private=True)
         channel.members.add(user1, user2)
 
@@ -22,7 +35,7 @@ class ChannelService(object):
 
         Direct.objects.bulk_create(directs)
 
-        return channel, True
+        return channel
 
 
     @classmethod
