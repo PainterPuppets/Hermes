@@ -36,6 +36,18 @@ ALLOWED_HOSTS = [
 ]
 
 
+# ali oss
+ALIYUN_OSS_CNAME = ""
+ACCESS_KEY_ID = "LTAI7leHEIXpy8oG"
+ACCESS_KEY_SECRET = "56B74IXf8RGbyivOtmDzlSZiLwBfYF"
+END_POINT = "oss-cn-shanghai.aliyuncs.com"
+BUCKET_NAME = "yn-hermes-website"
+BUCKET_ACL_TYPE = "public-read"
+
+DEFAULT_FILE_STORAGE = 'aliyun_oss2_storage.backends.AliyunStaticStorage'
+STATICFILES_STORAGE = 'aliyun_oss2_storage.backends.AliyunStaticStorage'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,6 +64,7 @@ INSTALLED_APPS = [
     'guild',
     'realtime',
     'chat',
+    'aliyun_oss2_storage',
 ]
 
 MIDDLEWARE = [
