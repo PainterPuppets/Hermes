@@ -30,6 +30,12 @@ export interface IMessage {
     content: string;
     time: string;
     is_received?: boolean;
+    type: number;
+    file: {
+        name: string;
+        size: number;
+        url: string;
+    }
 }
 
 export interface IChannel {

@@ -85,7 +85,7 @@ const StyledMessage = styled.div<{ usernameColor: string }>`
   }
 `;
 
-export const Message = ({ guild, member, time, children, isHeading, onMemberClick }: any) => {
+export const Message = ({ guild, member, time, children, isHeading, onMemberClick  }: any) => {
   const firstRoleIdWithColor =
     member.roles &&
     member.roles.find((roleId: any) => {

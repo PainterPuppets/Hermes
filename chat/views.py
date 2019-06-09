@@ -30,9 +30,11 @@ class ChatViewSet(ViewSet):
 
         serializer = ChatSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        content = serializer.validated_data['content']
+        content = serializer.validated_data.get('content', '')
+        file = serializer.validated_data.get('file', None)
+        type = serializer.validated_data['type']
 
-        message = channel.send_message(request.user, content)
+        message = channel.send_message(request.user, type, content, file)
         return Response(MessageSerializer(message).data, status=status.HTTP_200_OK)
 
     

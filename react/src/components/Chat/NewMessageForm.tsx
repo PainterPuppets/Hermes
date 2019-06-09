@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { Input } from 'antd';
+import  { MessageType } from '../../constant';
+import { Input, Upload } from 'antd';
 
 import AttachButton from './AttachButton';
 import NewMessageButtons from './NewMessageButtons';
@@ -72,7 +73,7 @@ class NewMessageForm extends Component<any, any> {
     if (this.state.value === '') {
       return;
     }
-    this.props.onSend(this.state.value)
+    this.props.onSend(MessageType.TEXT, this.state.value)
     this.setState({
       value: '',
     })
@@ -83,10 +84,31 @@ class NewMessageForm extends Component<any, any> {
     this.textArea.focus();
   }
 
+  
+  beforeUpload = (file: Blob) => {
+    let type = MessageType.FILE
+  
+    const imageFileTypes = ["image/png", "image/jpeg", "image/gif"];
+    if (imageFileTypes.indexOf(file.type) > -1) {
+      type = MessageType.IMAGE
+    }
+  
+    this.props.onSend(type, '', file);
+    return false;
+  }
+
   render() {
     return (
     <StyledNewMessageForm>
-      <AttachButton />
+      <Upload
+        name="file"
+        className={`file-uploader ${this.props.className}`}
+        showUploadList={false}
+        multiple={false}
+        beforeUpload={this.beforeUpload}
+      >
+        <AttachButton />
+      </Upload>
 
       <StyledDivider />
 

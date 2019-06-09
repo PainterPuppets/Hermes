@@ -101,7 +101,7 @@ const Chat = ({ className, isPrivate, channelName, guild, messages }: any) => {
             <NewMessageWrapper
               channelName={channelName}
               isPrivate={isPrivate}
-              onSend={(value: string) => ChatStore.sendMessage(UIStore.currentChannelId, value)}
+              onSend={(type: number, content?: string, file?: Blob) => ChatStore.sendMessage(UIStore.currentChannelId, type, content, file)}
             />
           </div>
 

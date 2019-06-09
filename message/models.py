@@ -8,6 +8,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from message.listener import push_signal, fanout_message
+from message.constants import MessageType, MESSAGE_TYPE_CHOICES
 
 
 class Channel(models.Model):
@@ -16,10 +17,12 @@ class Channel(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     last_activity_at = models.DateTimeField(auto_now_add=True)
 
-    def send_message(self, sender, content):
+    def send_message(self, sender, type, content='', file=None):
         message = Message.objects.create(
             user=sender,
+            type=type,
             content=content,
+            file=file,
             channel=self,
         )
 
@@ -37,6 +40,8 @@ class Message(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     channel = models.ForeignKey(Channel, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
+    file = models.FileField(null=True, blank=True, upload_to="static/files/")
+    type = models.IntegerField(choices=MESSAGE_TYPE_CHOICES, default=MessageType.TEXT)
     time = models.DateTimeField(auto_now_add=True)
 
 

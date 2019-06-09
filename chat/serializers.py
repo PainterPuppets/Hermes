@@ -5,7 +5,9 @@ from message.services import ChannelService
 from user.serializers import UserSerializer
 
 class ChatSerializer(serializers.Serializer):
-    content = serializers.CharField()
+    file = serializers.FileField(required=False)
+    content = serializers.CharField(required=False)
+    type = serializers.CharField()
 
 class DirectCreateSerializer(serializers.Serializer):
     target_id = serializers.IntegerField()

@@ -127,12 +127,34 @@ class ChatStore {
     });
   }
 
-  @action sendMessage = (id: string, content: string) => {
+  @action sendMessage = (id: string, type: number, content?: string, file?: Blob) => {
     if (!id) {
       return;
     }
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', type.toString());
+
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+      return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, formData, config).then((res) => {
+        console.log('send success')
+        console.log(res.data)
+        let channel = this.getDirectCannel(id);
+        if (!channel) {
+          return;
+        }
+        channel.messages.push(res.data);
+      });
+    }
+    
   
-    return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { content }).then((res) => {
+    return BaseProvider.post(`/api/chat/message/${encodeURIComponent(id)}/`, { 
+        content,
+        file,
+        type
+      }).then((res) => {
       console.log('send success')
       console.log(res.data)
       let channel = this.getDirectCannel(id);
