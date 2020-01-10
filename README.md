@@ -1,7 +1,7 @@
 # Hermes
 IM web app using react and django
 
-demo: http://47.103.194.102/
+demo: http://139.196.35.231//
 
 ![image](https://user-images.githubusercontent.com/22258327/61016236-806aa880-a3c1-11e9-9595-5ef5aab3ea7f.png)
 
