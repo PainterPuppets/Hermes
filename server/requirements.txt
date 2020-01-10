@@ -4,6 +4,6 @@ psycopg2==2.8.2
 pytz==2018.5
 six==1.12.0
 cent==2.1.0
-Pillow==6.0.0
+Pillow==6.2.0
 oss2==2.6.1
 django-aliyun-oss2-storage-noproblem==0.1.2
