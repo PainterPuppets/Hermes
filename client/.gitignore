@@ -1,0 +1,50 @@
+react/v8-compile-cache-0/
+build/
+dist/
+tmp/
+package-lock.json
+data
+collectstatic/
+.vagrant
+*.zip
+*.pyc
+*.DS_Store
+*.swp
+local_settings.py
+env
+.venv
+gunicorn.sh
+### PyCharm ###
+*.iml
+.idea/
+### VSCode ###
+.vscode/
+### Django ###
+*.pyc
+local_settings.py
+*.so
+*.mo
+media/
+*.pid
+celerybeat-schedule
+*~
+celerybeat-schedule.*
+*.log
+
+# static
+static/*
+!static/favicon.ico
+
+# react
+react/.cache-loader
+yarn-error.log
+typings
+node_modules
+
+### useless files clone from cloudjudge ###
+cj/tempgen/cli.py
+
+# Batchjudge extract problem
+batchjudge_extract/
+db.sqlite3
+db/db.sqlite3

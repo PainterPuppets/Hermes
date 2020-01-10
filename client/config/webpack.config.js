@@ -23,7 +23,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
-const WebpackAliyunOss = require('webpack-aliyun-oss')
+const WebpackAliyunOss = require('../webpackplugin/webpack-aliyun-oss');
 // import color from '../src/utils/colors'
 const colors = require('./colors');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -153,12 +153,12 @@ module.exports = function () {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'static/js/[name].[chunkhash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+        ? 'dist/static/js/[name].[chunkhash:8].js'
+        : isEnvDevelopment && 'dist/static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? 'static/js/[name].[chunkhash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
+        ? 'dist/static/js/[name].[chunkhash:8].chunk.js'
+        : isEnvDevelopment && 'dist/static/js/[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -328,7 +328,7 @@ module.exports = function () {
               loader: require.resolve('url-loader'),
               options: {
                 limit: 10000,
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'dist/static/media/[name].[hash:8].[ext]',
               },
             },
             // Process application JS with Babel.
@@ -507,7 +507,7 @@ module.exports = function () {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'dist/static/media/[name].[hash:8].[ext]',
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -524,7 +524,7 @@ module.exports = function () {
           {},
           {
             // inject: true,
-            filename: '../../templates/base.html',
+            filename: './index.html',
             template: paths.appHtml,
             alwaysWriteToDisk: true
           },
@@ -583,8 +583,8 @@ module.exports = function () {
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: 'static/css/[name].[contenthash:8].css',
-        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+        filename: 'dist/static/css/[name].[contenthash:8].css',
+        chunkFilename: 'dist/static/css/[name].[contenthash:8].chunk.css',
       }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
@@ -645,16 +645,17 @@ module.exports = function () {
         formatter: typescriptFormatter,
       }),
       // upload file to ali oss
-      isEnvProduction &&
+      // isEnvProduction &&
       new WebpackAliyunOss({
         dist: 'hermes/',
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI7leHEIXpy8oG',
         accessKeySecret: '56B74IXf8RGbyivOtmDzlSZiLwBfYF',
         bucket: 'yn-admin-website',
+        timeout: 600 * 1000,
         setOssPath(filePath) {
           // some operations to filePath
-          let re = /.*(static[\s\S]+)/g
+          let re = /.*(dist[\s\S]+)/g
           return re.exec(filePath.replace(/\\/g, '/'))[1];
         },
       })

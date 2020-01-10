@@ -4,14 +4,15 @@
   "scripts": {
     "watch": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js -w",
     "dev": "yarn clean && cross-env NODE_ENV=development webpack --config ./config/webpack.config.js",
-    "production": "yarn clean && cross-env NODE_ENV=production  GENERATE_SOURCEMAP=false webpack --progress --config ./config/webpack.config.js --hide-modules",
-    "clean": "rimraf ../static/react",
+    "production": "yarn clean && cross-env NODE_ENV=production GENERATE_SOURCEMAP=true webpack --progress --config ./config/webpack.config.js --hide-modules",
+    "clean": "rimraf ./dist",
     "lint": "eslint src --ext .ts",
     "fix": "eslint src --ext .ts --fix"
   },
   "dependencies": {
     "@types/emoji-mart": "^2.8.4",
     "agora-rtc-sdk": "^2.6.1",
+    "ali-oss": "^6.4.0",
     "antd": "^3.19.1",
     "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
@@ -25,7 +26,6 @@
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "centrifuge": "^1.4.7",
-    "centrifuge-ts": "^1.0.6",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "css-loader": "1.0.0",
@@ -73,8 +73,7 @@
     "styled-components": "^4.2.0",
     "terser-webpack-plugin": "1.2.2",
     "typescript": "3.3.3333",
-    "url-loader": "1.1.2",
-    "webpack-aliyun-oss": "^0.1.1"
+    "url-loader": "1.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.2.2",

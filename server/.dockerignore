@@ -1,0 +1,10 @@
+*.DS_Store
+*.swp
+### PyCharm ###
+*.iml
+.idea/
+### VSCode ###
+.vscode/
+### Django ###
+*.pyc
+__pycache__
