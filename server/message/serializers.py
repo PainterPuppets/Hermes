@@ -3,6 +3,7 @@ from message.models import Message, Signal, Channel
 from message.services import ChannelService
 from user.serializers import UserSerializer
 
+
 class MessageFileSerializer(serializers.BaseSerializer):
     def to_representation(self, file):
         if not file:
@@ -12,10 +13,9 @@ class MessageFileSerializer(serializers.BaseSerializer):
                 'url': '',
             }
 
-        print (file.__dict__)
         return {
             'name': file.name,
-            'size': file.size,
+            'size': '',
             'url': file.url,
         }
 

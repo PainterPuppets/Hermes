@@ -34,17 +34,19 @@ class WebSocketService(object):
         return WEBSOCKET_ENV + text
 
     @classmethod
-    def generate_token(cls, user, info="", secret=settings.CENTRIFUGE_SECRET):
-        claims = {"sub": str(user), "exp": time.time() + 300}
+    def generate_token(cls, user, timestamp, secret=settings.CENTRIFUGE_SECRET):
+        claims = {"sub": str(user), "exp": timestamp}
+        # print('233')
         token = jwt.encode(claims, secret).decode()
 
         return token
 
     @classmethod
     def get_websocket_data(cls, user):
-        token = cls.generate_token(user.id)
+        timestamp = int(time.time()) + 300
+        token = cls.generate_token(user.id, timestamp)
 
-        return dict(user=user.id, token=token, env=WEBSOCKET_ENV)
+        return dict(user=user.id, timestamp=timestamp, token=token, env=WEBSOCKET_ENV)
 
     @classmethod
     def push_message(cls, channel_name, message):
