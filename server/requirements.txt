@@ -1,9 +1,11 @@
+PyJWT
 Django==2.2
 djangorestframework==3.8.2
 psycopg2==2.8.2
 pytz==2018.5
 six==1.12.0
-cent==2.1.0
+cent==3.0.1
 Pillow==6.0.0
 oss2==2.6.1
+django-jet==1.0.8
 django-aliyun-oss2-storage-noproblem==0.1.2

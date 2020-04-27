@@ -26,15 +26,13 @@ SECRET_KEY = '2%ypz)3vp2c4ecfnt==izv3x7evcdk#xbu3)@65hzpt5=__dmr'
 DEBUG = True
 
 # centrifugo
-CENTRIFUGE_ADDRESS = 'https://socket.jiuzhang.com'
-CENTRIFUGE_SECRET = 'c597cc75-0c39-49b9-84b9-dffb5ec54873'
+CENTRIFUGE_ADDRESS = os.environ.get('CENTRIFUGE_ADDRESS', '')
+CENTRIFUGE_SECRET = os.environ.get('CENTRIFUGE_SECRET', '')
 CENTRIFUGE_TIMEOUT = 5
-
 
 ALLOWED_HOSTS = [
     '*'
 ]
-
 
 # ali oss
 ALIYUN_OSS_CNAME = ""
@@ -51,6 +49,7 @@ STATICFILES_STORAGE = 'aliyun_oss2_storage.backends.AliyunStaticStorage'
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,7 +150,5 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "static/react/static"),
 )
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-

@@ -1,6 +1,5 @@
 import { action, observable } from "mobx";
 import Centrifuge from 'centrifuge';
-import SockJS from 'sockjs-client';
 import BaseProvider from '../utils/BaseProvider';
 
 class WebSocketStore {
@@ -8,66 +7,66 @@ class WebSocketStore {
   @observable initial = false;
   @observable env = 'hermes-';
 
-  @observable _centrifuge = null;
-  @observable _subscriptions = {};
+  @observable centrifuge?: Centrifuge;
+  @observable subscriptions: {
+    [channel: string]: Centrifuge.Subscription,
+  } = {};
 
   @action getWebsocketClient = () => {
-    if (this._centrifuge !== null) {
-      return this._centrifuge;
+    if (this.centrifuge) {
+      return this.centrifuge;
     }
+    console.log()
 
     return BaseProvider.get('/api/realtime/config/').then((res) => {
-      this.env = res.data.env;
-      this._centrifuge = new Centrifuge({
-        url: res.data.url,
-        user: `${res.data.user}`,
-        timestamp: res.data.timestamp,
-        token: res.data.token,
-        sockJS: SockJS
-      });
-
-      this._centrifuge.on('connect', () => {
+      console.log(res)
+      this.centrifuge = new Centrifuge(`ws://${window.document.domain}/websocket/connection/websocket`);
+      this.centrifuge.setToken(res.data.token)
+      this.centrifuge.on('connect', context => {
+        console.log('connect !')
+        console.log(context)
         this.connected = true;
         this.initial = true;
       });
-
-      this._centrifuge.on('disconnect', () => {
+      this.centrifuge.on('disconnect', (context) => {
+        console.log('disconnect !?')
+        console.log(context)
         this.connected = false;
       });
+      this.centrifuge.connect();
 
-      this._centrifuge.connect();
-
-      return this._centrifuge;
+      return this.centrifuge;
     });
   }
 
-  @action _getChannelName = (text) => {
+  @action _getChannelName = (text: string) => {
     return this.env + text;
   }
 
-  @action subscribe = async (channelName, callBack) => {
+  @action subscribe = async (channelName: string, callBack?: (...args: any[]) => void) => {
     const client = await this.getWebsocketClient();
     const internalChannelName = this._getChannelName(channelName);
-    if (this._subscriptions[internalChannelName]) {
-      return this._subscriptions[internalChannelName];
+    console.log('subscribe new channel' + internalChannelName)
+    if (this.subscriptions[internalChannelName]) {
+      return this.subscriptions[internalChannelName];
     }
     const subscription = await client.subscribe(internalChannelName, callBack);
-    this._subscriptions[internalChannelName] = subscription;
+    this.subscriptions[internalChannelName] = subscription;
 
     return subscription;
   }
 
-  @action unsubscribe = async (channelName) => {
+  @action unsubscribe = async (channelName: string) => {
     const internalChannelName = this._getChannelName(channelName);
-    const subscription = this._subscriptions[internalChannelName];
+    const subscription = this.subscriptions[internalChannelName];
     if (!subscription) return;
     subscription.unsubscribe();
-    delete this._subscriptions[internalChannelName];
+    delete this.subscriptions[internalChannelName];
   }
 
-  @action getSubscription = (channelName) => {
+  @action getSubscription = (channelName: string) => {
     const internalChannelName = this._getChannelName(channelName);
-    const subscription = this._subscriptions[internalChannelName];
+    const subscription = this.subscriptions[internalChannelName];
     if (!subscription) {
       return this.subscribe(internalChannelName);
     }
@@ -78,10 +77,9 @@ class WebSocketStore {
   @action connect = async () => {
     const client = await this.getWebsocketClient();
 
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       client.connect();
       client.on('connect', res);
-      client._config.onTransportClose = rej;
     });
   }
 
@@ -97,8 +95,8 @@ class WebSocketStore {
       this.connected = false;
       this.initial = false;
       this.env = 'hermes-';
-      this._centrifuge = null;
-      this._subscriptions = {};
+      this.centrifuge = undefined;
+      this.subscriptions = {};
     });
   }
 

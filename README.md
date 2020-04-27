@@ -9,9 +9,13 @@ demo: http://139.196.35.231//
 
 
 
-
 # 快速进入开发流程
 输入`git clone git@github.com:PainterPuppets/Hermes.git`将仓库clone到本地
+
+## 使用docker-compose打开项目
+1.输入`docker-compose build`编译镜像
+2.输入`docker-compose up`启动应用
+3.打开浏览器，输入`127.0.0.1`即可看到应用，享受hermes吧！
 
 ## 后端编译
 

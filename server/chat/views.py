@@ -37,13 +37,11 @@ class ChatViewSet(ViewSet):
         message = channel.send_message(request.user, type, content, file)
         return Response(MessageSerializer(message).data, status=status.HTTP_200_OK)
 
-    
     @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='directs')
     def directs(self, request):
         directs = Direct.objects.filter(user=request.user, is_close=False)
         serializer = DirectSerializer(directs, context={'request': request}, many=True)
         return Response(serializer.data)
-
 
     @list_route(methods=['GET'], permission_classes=[IsAuthenticated], url_path='direct/(?P<id>[^/.]+)')
     def direct(self, request, id=None):
@@ -53,7 +51,6 @@ class ChatViewSet(ViewSet):
         channel = ChannelService.get_channel_from_id(id)
         direct = channel.direct_set.get(user=request.user)
         return Response(DirectSerializer(direct, context={'request': request}).data)
-
 
     @list_route(methods=['Delete'], permission_classes=[IsAuthenticated], url_path='direct/(?P<id>[^/.]+)')
     def direct_delete(self, request, id=None):
@@ -66,7 +63,7 @@ class ChatViewSet(ViewSet):
         direct.save()
 
         return Response(DirectSerializer(direct, context={'request': request}).data)
-    
+
     @list_route(methods=['POST'], permission_classes=[IsAuthenticated], url_path='direct_read/(?P<id>[^/.]+)')
     def direct_read(self, request, id=None):
         if not ChannelService.check_channel_exist(id):

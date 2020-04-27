@@ -19,6 +19,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
+const getWebpackDevServerConfig = require('./webpackDevServer.config');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
@@ -28,6 +29,14 @@ const WebpackAliyunOss = require('../webpackplugin/webpack-aliyun-oss');
 const colors = require('./colors');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const argv = require('yargs').argv;
+const devBackend = argv.devBackend || `http://127.0.0.1:8080`; // yarn start --devBackend=http://192.168.1.144:8001
+
+const proxy = [{
+  context: ['/api/', '/static/'],
+  target: devBackend,
+  secure: false
+}];
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -645,7 +654,7 @@ module.exports = function () {
         formatter: typescriptFormatter,
       }),
       // upload file to ali oss
-      // isEnvProduction &&
+      isEnvProduction &&
       new WebpackAliyunOss({
         dist: 'hermes/',
         region: 'oss-cn-shanghai',
@@ -671,6 +680,7 @@ module.exports = function () {
       tls: 'empty',
       child_process: 'empty',
     },
+    devServer: getWebpackDevServerConfig(proxy),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,

@@ -1,0 +1,9 @@
+{
+    "token_hmac_secret_key": "c597cc75-0c39-49b9-84b9-dffb5ec54873",
+    "api_key": "c597cc75-0c39-49b9-84b9-dffb5ec54873",
+    "log_level": "debug",
+    "port": 8000,
+    "admin_password": "admin",
+    "admin_secret": "admin",
+    "client_insecure": true
+  }

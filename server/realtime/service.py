@@ -3,6 +3,7 @@ import six
 import hmac
 import time
 import logging
+import jwt
 from hashlib import sha256
 from cent import Client
 
@@ -33,29 +34,25 @@ class WebSocketService(object):
         return WEBSOCKET_ENV + text
 
     @classmethod
-    def generate_token(cls, user, timestamp, info="", secret=settings.CENTRIFUGE_SECRET):
-        user = str(user)
+    def generate_token(cls, user, info="", secret=settings.CENTRIFUGE_SECRET):
+        claims = {"sub": str(user), "exp": time.time() + 300}
+        token = jwt.encode(claims, secret).decode()
 
-        sign = hmac.new(six.b(secret), digestmod=sha256)
-        sign.update(six.b(user))
-        sign.update(six.b(timestamp))
-        sign.update(six.b(info))
-        return sign.hexdigest()
+        return token
 
     @classmethod
     def get_websocket_data(cls, user):
-        timestamp = str(int(time.time()) * 1000000)
-        token = cls.generate_token(user.id, timestamp)
-        url = '%s/connection' % settings.CENTRIFUGE_ADDRESS
+        token = cls.generate_token(user.id)
 
-        return dict(user=user.id, timestamp=timestamp, token=token, url=url, env=WEBSOCKET_ENV)
+        return dict(user=user.id, token=token, env=WEBSOCKET_ENV)
 
     @classmethod
     def push_message(cls, channel_name, message):
         logger.info('push message to %s' % channel_name)
         channel_name = cls.get_channel_name(channel_name)
+        print('send %s to %s' % (message, channel_name))
 
-        try:
-            cls.client.publish(channel_name, message)
-        except Exception as e:
-            logger.error('Socket server has error', repr(e))
+        # try:
+        cls.client.publish(channel_name, message)
+        # except Exception as e:
+        #     logger.error('Socket server has error', repr(e))

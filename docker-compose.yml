@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     image: nginx:latest 
-    container_name: web
     ports:
      - "80:80"
     volumes:
@@ -24,10 +23,30 @@ services:
     volumes:
       - ./server:/home/app
       - ./server/db:/home/app/db/
+    environment:
+      - CENTRIFUGE_ADDRESS=http://192.168.5.103:8000
+      - CENTRIFUGE_SECRET=c597cc75-0c39-49b9-84b9-dffb5ec54873
 
     networks: 
       nn:
         ipv4_address: 192.168.5.102
+
+  centrifugo:
+    image: centrifugo/centrifugo
+    ulimits:
+      nproc: 65536
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./centrifugo:/centrifugo
+    command: centrifugo -c /centrifugo/config.json --admin
+
+    networks: 
+      nn:
+        ipv4_address: 192.168.5.103
 
 networks: ##定义网络组
   nn: ## 网络组名称

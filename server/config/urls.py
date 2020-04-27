@@ -20,6 +20,7 @@ from config.views import react
 from config.router import router
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('', react),
