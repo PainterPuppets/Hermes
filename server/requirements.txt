@@ -1,6 +1,6 @@
 PyJWT
 Django==2.2
-djangorestframework==3.8.2
+djangorestframework==3.9.1
 psycopg2==2.8.2
 pytz==2018.5
 six==1.12.0
