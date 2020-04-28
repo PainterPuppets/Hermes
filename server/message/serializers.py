@@ -43,6 +43,7 @@ class MessageSerializer(serializers.ModelSerializer):
     def get_file(self, obj):
         return MessageFileSerializer(obj.file).data
 
+
 class SignalSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='message.id')
     content = serializers.CharField(source='message.content')

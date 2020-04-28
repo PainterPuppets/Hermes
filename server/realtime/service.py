@@ -1,10 +1,7 @@
 # coding: utf-8
-import six
-import hmac
 import time
 import logging
 import jwt
-from hashlib import sha256
 from cent import Client
 
 from django.conf import settings
